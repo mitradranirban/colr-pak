@@ -49,11 +49,14 @@ jobs:
         chmod +x dist/colrpak
         tar -czf colrpak-linux.tar.gz -C dist colrpak
 
-    - name: Package macOS (unsigned)
-      if: matrix.os == 'macos-latest'
+    - name: Package macOS app
+      if: runner.os == 'macOS'
       run: |
-        ditto -c -k --sequesterRsrc --keepParent "dist/Color Pak.app" colrpak-macos.zip
-
+        # Debug: list what's actually in dist/
+        ls -la dist/
+        # Zip the correct app bundle (with proper quoting for spaces)
+        ditto -c -k --sequesterRsrc --keepParent "dist/Colr Pak.app" colrpak-macos.zip
+    
     - name: Package Windows
       if: matrix.os == 'windows-latest'
       shell: powershell
