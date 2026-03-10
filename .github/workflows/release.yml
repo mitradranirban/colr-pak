@@ -35,7 +35,7 @@ jobs:
         pip install --no-binary=:all: --force-reinstall unicodedata2
 
     - name: Make and install universal wheels
-      if: ${{ matrix.NAME == 'macos-latest' }}
+      if: ${{ matrix.os == 'macos-latest' }}
       run: |
         python macos/ensure_universal_wheels.py pip_log.txt
         pip install --force build/universal_wheels/*.whl
