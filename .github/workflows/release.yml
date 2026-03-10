@@ -46,8 +46,8 @@ jobs:
     - name: Package Linux
       if: matrix.os == 'ubuntu-latest'
       run: |
-        chmod +x dist/colorpak
-        tar -czf colrpak-linux.tar.gz -C dist colorpak
+        chmod +x dist/colrpak
+        tar -czf colrpak-linux.tar.gz -C dist colrpak
 
     - name: Package macOS (unsigned)
       if: matrix.os == 'macos-latest'
