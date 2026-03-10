@@ -1,0 +1,70 @@
+name: Update Homebrew Cask
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  cask:
+    runs-on: macos-latest
+    steps:
+    - name: Checkout your Homebrew tap
+      uses: actions/checkout@v4
+      with:
+        repository: mitradranirban/homebrew-tap
+        token: ${{ secrets.HOMEBREW_PAT }}
+        path: tap
+
+    - name: Download macOS binary
+      uses: actions/download-artifact@v4
+      with:
+        name: colr-pak-macos-latest
+        path: artifacts
+
+    - name: Generate Cask
+      run: |
+        cd artifacts
+        SHA256=$(shasum -a 256 colr-pak-macos.zip | cut -d' ' -f1)
+        VERSION="${{ github.event.release.tag_name }}"
+
+        cd ../tap
+        mkdir -p Casks
+
+        cat > Casks/colr-pak.rb << 'EOF'
+        cask "colr-pak" do
+          version "$VERSION"
+          sha256 "$SHA256"
+
+          url "https://github.com/mitradranirban/colr-pak/releases/download/\${version}/colr-pak-macos.zip"
+          name "Colr Pak"
+          desc "Standalone COLRv0/COLRv1 color font editor"
+          homepage "https://github.com/mitradranirban/colr-pak"
+
+          app "Color Pak.app"
+
+          postflight do
+            system "xattr", "-r", "-d", "com.apple.quarantine", "#{appdir}/Color Pak.app"
+            system "xattr", "-r", "-d", "com.apple.metadata:kMDItemWhereFroms", "#{appdir}/Color Pak.app"
+          end
+
+          zap trash: [
+            "~/Library/Application Support/xyz.fontra/ColorPak",
+            "~/Library/Preferences/xyz.fontra.ColorPak.plist"
+          ]
+        end
+        EOF
+
+    - name: Commit Cask
+      run: |
+        cd tap
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add Casks/colr-pak.rb
+        git commit -m "colr-pak $VERSION ($SHA256)" || exit 0
+        git push origin main
+
+    - name: Upload Cask
+      uses: actions/upload-artifact@v4
+      with:
+        name: colr-pak-cask
+        path: tap/Casks/colr-pak.rb

@@ -1,7 +1,7 @@
 # Color Pak
 
 <p align="center">
-  <img src="icon/FontraIcon.icns" alt="Color Pak Icon" width="128"/>
+  <img src="icon/ColrIcon.icns" alt="Color Pak Icon" width="128"/>
 </p>
 
 <p align="center">
@@ -55,7 +55,7 @@ Your fonts stay entirely on your computer and are never uploaded anywhere.
 
 ## Installation
 
-Download the latest release for your platform from the [Releases page](https://github.com/mitradranirban/fontra-pak/releases/latest):
+Download the latest release for your platform from the [Releases page](https://github.com/mitradranirban/colr-pak/releases/latest):
 
 - **macOS** — `Color-Pak-macOS.dmg`
 - **Windows** — `Color-Pak-Windows.exe`
@@ -77,7 +77,7 @@ No installation of Python or any other dependency is required — Color Pak ship
 
 ```bash
 # 1. Clone this repository
-git clone https://github.com/mitradranirban/fontra-pak
+git clone https://github.com/mitradranirban/colr-pak
 cd fontra-pak
 
 # 2. Create and activate a virtual environment
@@ -131,16 +131,16 @@ Contributions to the upstream project that are not color-specific should ideally
 
 ## License
 
-Color Pak inherits the license of the Fontra project. See [LICENSE](LICENSE) for details.
+Color Pak inherits the GPL3 license of the Fontra project. See [LICENSE](LICENSE) for details.
 
-Original Fontra © Google LLC, Just van Rossum.  
+Original Fontra © Google LLC, Just van Rossum.
 Color Pak extensions © contributors of this fork.
 
 ---
 
 ## Links
 
-- [Fontra documentation](https://docs.fontra.xyz)
+- [Colr Pak documentation](https://fonts.atipra.in/colrpak.html)
 - [COLRv1 specification overview](https://simoncozens.github.io/colrv1-rocks/)
 - [Upstream Fontra Pak](https://github.com/fontra/fontra-pak)
 - [Upstream Fontra](https://github.com/fontra/fontra)

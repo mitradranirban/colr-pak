@@ -3,7 +3,7 @@ import sys
 from importlib.metadata import PackageNotFoundError
 from PyInstaller.utils.hooks import collect_all, copy_metadata
 from fontra import __version__ as fontraVersion
-
+COLR_PAK_VERSION = "0.1.0"
 
 def buildWindowsVersionResource():
     from PyInstaller.utils.win32.versioninfo import (
@@ -132,8 +132,8 @@ if sys.platform == "darwin":
         coll,
         name="Colr Pak.app",
         icon="icon/ColrIcon.icns",
-        bundle_identifier="xyz.fontra.fontra-pak",
-        version=fontraVersion,
+        bundle_identifier="xyz.fontra.colr-pak",
+        version="0.1.0",
         info_plist={
             "CFBundleDocumentTypes": [
                 dict(
@@ -163,7 +163,7 @@ else:
         a.zipfiles,
         a.datas,
         [],
-        name="Colr Pak" if sys.platform == "win32" else "fontrapak",
+        name="Colr Pak" if sys.platform == "win32" else "colrpak",
         debug=False,
         bootloader_ignore_signals=False,
         strip=False,

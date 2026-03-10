@@ -78,12 +78,12 @@ mainText = """
 <span style="font-size: 40px;">Drop font files here </span>
 <br>
 Font files are not uploaded but processed locally
- 
+
 <br>
-COLR Pak is an unofficial fork of Fontra font editor for COLR fonts 
+COLR Pak is an unofficial fork of Fontra font editor for COLR fonts
 <br>
 It reads and writes .ufo, .designspace for COLR V0 format fonts
-and .fontra format for color v1 fonts and partial support for reading and 
+and .fontra format for color v1 fonts and partial support for reading and
 writing .glyphs and .glyphspackage files (without colr data).
 <br>
 Additionally, it can extract color layers and palletes from .ttf file
@@ -113,10 +113,10 @@ exportFileTypesMapping = {
 
 exportExtensionMapping = {v: k for k, v in exportFileTypesMapping.items()}
 
-latestReleasePageURL = "https://github.com/mitradranirban/fontra-pak/releases/latest"
+latestReleasePageURL = "https://github.com/mitradranirban/colr-pak/releases/latest"
 
 
-applicationSettings = QSettings("xyz.fontra", "FontraPak")
+applicationSettings = QSettings("xyz.fontra", "ColrPak")
 
 
 class FontraApplication(QApplication):
@@ -147,6 +147,7 @@ class FontraMainWidget(QMainWindow):
         super().__init__()
         self.port = port
         self.openProjects = set()
+        self.settings = applicationSettings
 
         self.setWindowTitle("Colr Pak")
         self.resize(720, 480)
@@ -174,7 +175,9 @@ class FontraMainWidget(QMainWindow):
         buttonDocs = QPushButton("Documentation", self)
         buttonDocs.setToolTip("Open documentation website")
         buttonDocs.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-        buttonDocs.clicked.connect(lambda: webbrowser.open("https://docs.fontra.xyz"))
+        buttonDocs.clicked.connect(
+            lambda: webbrowser.open("https://fonts.atipra.in/colrpak.html")
+        )
 
         layout.addWidget(button, 0, 0, alignment=Qt.AlignmentFlag.AlignLeft)
         layout.addWidget(buttonDocs, 0, 1, alignment=Qt.AlignmentFlag.AlignRight)
@@ -198,7 +201,9 @@ class FontraMainWidget(QMainWindow):
         layout.addWidget(QLabel("Sample text:"), 2, 0)
         layout.addWidget(self.sampleTextBox, 3, 0, 1, 2)
 
-        layout.addWidget(QLabel(f"Fontra version {fontraVersion}"), 4, 0)
+        layout.addWidget(
+            QLabel(f"Colr Pak v0.1.0 (based on fontra {fontraVersion})"), 4, 0
+        )
 
         if sys.platform in {"darwin", "win32"}:
             self.downloadButton = QPushButton("Download latest Colr Pak", self)
