@@ -61,7 +61,7 @@ jobs:
       if: matrix.os == 'windows-latest'
       shell: powershell
       run: |
-        Compress-Archive -Path "dist/Color Pak.exe" -DestinationPath colrpak-windows.zip
+        Compress-Archive -Path "dist/Colr Pak.exe" -DestinationPath colrpak-windows.zip
 
     - uses: actions/upload-artifact@v4
       with:
@@ -83,5 +83,5 @@ jobs:
         files: |
           dist/colrpak-ubuntu-latest/colrpak-linux.tar.gz
           dist/colrpak-macos-latest/colrpak-macos.zip
-          dist/colrpak-windows-latest/colr-pak-windows.zip
+          dist/colrpak-windows-latest/colrpak-windows.zip
         generate_release_notes: true
