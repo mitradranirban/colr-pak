@@ -75,16 +75,18 @@ border: 5px solid gray;
 )
 
 mainText = """
-<span style="font-size: 40px;">Drop font files here</span>
+<span style="font-size: 40px;">Drop font files here </span>
 <br>
+Font files are not uploaded but processed locally
+ 
 <br>
-Your fonts will stay on your computer and will not be uploaded anywhere.
+COLR Pak is an unofficial fork of Fontra font editor for COLR fonts 
 <br>
+It reads and writes .ufo, .designspace for COLR V0 format fonts
+and .fontra format for color v1 fonts and partial support for reading and 
+writing .glyphs and .glyphspackage files (without colr data).
 <br>
-Fontra Pak reads and writes .ufo, .designspace, .fontra, and .rcjk, and has
-partial support for reading and writing .glyphs and .glyphspackage files.
-<br>
-Additionally, it can read (but not write) .ttf, .otf, .woff, .woff2, and .ttx.
+Additionally, it can extract color layers and palletes from .ttf file
 """
 
 fileTypes = [
@@ -111,7 +113,7 @@ exportFileTypesMapping = {
 
 exportExtensionMapping = {v: k for k, v in exportFileTypesMapping.items()}
 
-latestReleasePageURL = "https://github.com/fontra/fontra-pak/releases/latest"
+latestReleasePageURL = "https://github.com/mitradranirban/fontra-pak/releases/latest"
 
 
 applicationSettings = QSettings("xyz.fontra", "FontraPak")
@@ -146,7 +148,7 @@ class FontraMainWidget(QMainWindow):
         self.port = port
         self.openProjects = set()
 
-        self.setWindowTitle("Fontra Pak")
+        self.setWindowTitle("Colr Pak")
         self.resize(720, 480)
 
         self.resize(applicationSettings.value("size", QSize(720, 480)))
@@ -199,7 +201,7 @@ class FontraMainWidget(QMainWindow):
         layout.addWidget(QLabel(f"Fontra version {fontraVersion}"), 4, 0)
 
         if sys.platform in {"darwin", "win32"}:
-            self.downloadButton = QPushButton("Download latest Fontra Pak", self)
+            self.downloadButton = QPushButton("Download latest Colr Pak", self)
             self.downloadButton.setSizePolicy(
                 QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed
             )
@@ -219,7 +221,7 @@ class FontraMainWidget(QMainWindow):
         if self.openProjects:
             response = showMessageDialog(
                 "There are still open fonts, are you sure you want to quit?",
-                "Quitting Fontra Pak will cause open browser tabs to stop working.",
+                "Quitting Colr Pak will cause open browser tabs to stop working.",
                 buttons=QMessageBox.StandardButton.Close
                 | QMessageBox.StandardButton.Cancel,
                 defaultButton=QMessageBox.StandardButton.Cancel,

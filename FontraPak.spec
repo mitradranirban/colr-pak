@@ -37,14 +37,14 @@ def buildWindowsVersionResource():
                         "040904B0",
                         [
                             StringStruct("CompanyName", "Fontra.xyz"),
-                            StringStruct("FileDescription", "Fontra Pak"),
+                            StringStruct("FileDescription", "Colr Pak"),
                             StringStruct("FileVersion", fontraVersion),
-                            StringStruct("InternalName", "Fontra Pak"),
+                            StringStruct("InternalName", "Colr Pak"),
                             StringStruct(
                                 "LegalCopyright", "© Google LLC, Just van Rossum"
                             ),
-                            StringStruct("OriginalFilename", "Fontra Pak.exe"),
-                            StringStruct("ProductName", "Fontra Pak"),
+                            StringStruct("OriginalFilename", "Colr Pak.exe"),
+                            StringStruct("ProductName", "Colr Pak"),
                             StringStruct("ProductVersion", fontraVersion),
                         ],
                     )
@@ -105,7 +105,7 @@ if sys.platform == "darwin":
         a.scripts,
         [],
         exclude_binaries=True,
-        name="Fontra Pak",
+        name="Colr Pak",
         debug=False,
         bootloader_ignore_signals=False,
         strip=False,
@@ -116,7 +116,7 @@ if sys.platform == "darwin":
         target_arch="universal2",
         codesign_identity=None,
         entitlements_file=None,
-        icon="icon/FontraIcon.ico",
+        icon="icon/ColrIcon.ico",
     )
     coll = COLLECT(
         exe,
@@ -126,12 +126,12 @@ if sys.platform == "darwin":
         strip=False,
         upx=True,
         upx_exclude=[],
-        name="Fontra Pak",
+        name="Colr Pak",
     )
     app = BUNDLE(
         coll,
-        name="Fontra Pak.app",
-        icon="icon/FontraIcon.icns",
+        name="Colr Pak.app",
+        icon="icon/ColrIcon.icns",
         bundle_identifier="xyz.fontra.fontra-pak",
         version=fontraVersion,
         info_plist={
@@ -163,7 +163,7 @@ else:
         a.zipfiles,
         a.datas,
         [],
-        name="Fontra Pak" if sys.platform == "win32" else "fontrapak",
+        name="Colr Pak" if sys.platform == "win32" else "fontrapak",
         debug=False,
         bootloader_ignore_signals=False,
         strip=False,
@@ -176,6 +176,6 @@ else:
         target_arch=None,
         codesign_identity=None,
         entitlements_file=None,
-        icon="icon/FontraIcon.ico",
+        icon="icon/ColrIcon.ico",
         version=buildWindowsVersionResource() if sys.platform == "win32" else None,
     )

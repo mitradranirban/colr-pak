@@ -1,5 +1,5 @@
-git+https://github.com/fontra/fontra.git
-git+https://github.com/fontra/fontra-compile.git
+git+https://github.com/mitradranirban/fontra.git@fontra-color-support
+git+https://github.com/mitradranirban/fontra-compile.git@fontra-color-support
 git+https://github.com/fontra/fontra-rcjk.git
 git+https://github.com/fontra/fontra-glyphs.git
 aiohttp==3.13.3
