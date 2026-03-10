@@ -55,7 +55,6 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
-    contents: write
     steps:
     - uses: actions/download-artifact@v4
       with:
