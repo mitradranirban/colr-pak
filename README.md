@@ -1,7 +1,7 @@
 # Color Pak
 
 <p align="center">
-  <img src="icon/ColrIcon.icns" alt="Color Pak Icon" width="128"/>
+  <img src="icon/colr-pak-icon.svg" alt="Color Pak Icon" width="128"/>
 </p>
 
 <p align="center">
@@ -9,8 +9,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/mitradranirban/fontra-pak/releases/latest">
-    <img src="https://img.shields.io/github/v/release/mitradranirban/fontra-pak?label=Download" />
+  <a href="https://github.com/mitradranirban/colr-pak/releases/latest">
+    <img src="https://img.shields.io/github/v/release/mitradranirban/colr-pak?label=Download" />
   </a>
   <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-blue" />
   <img src="https://img.shields.io/badge/color-COLRv0%20%7C%20COLRv1-orange" />
