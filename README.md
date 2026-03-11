@@ -1,7 +1,7 @@
 # Color Pak
 
 <p align="center">
-  <img src="icon/colr-pak-icon.svg" alt="Color Pak Icon" width="128"/>
+  <img src="icon/colr-pak-icon.svg" alt="Color Pak Icon" width="512"/>
 </p>
 
 <p align="center">
@@ -31,7 +31,7 @@ Your fonts stay entirely on your computer and are never uploaded anywhere.
 - **COLRv1 Paint Graph Editor** — visually compose `PaintSolid`, `PaintLinearGradient`, `PaintRadialGradient`, `PaintSweepGradient`, `PaintGlyph`, `PaintTranslate`, `PaintScale`, `PaintRotate`, `PaintSkew`, and `PaintTransform` nodes per glyph.
 - **COLRv0 Layer Mapping** — manage color layer stacks with palette index assignments for simpler color fonts.
 - **One-click COLRv0 → COLRv1 Upgrade** — automatically convert an existing v0 layer mapping into an equivalent COLRv1 `PaintColrLayers` structure.
-- **Masterless COLRv1 Variation** — author variable color parameters (gradient stops, transform values, alpha) as independent per-axis keyframes, without requiring separate outline masters.
+- **Masterless COLRv1 Variation (WIP)** — author variable color parameters (gradient stops, transform values, alpha) as independent per-axis keyframes, without requiring separate outline masters.
 - **Live Canvas Rendering** — see COLRv1 paint effects rendered in real time on the glyph canvas as you edit.
 - **Palette Management** — define and switch between multiple color palettes; the active palette is reflected immediately in the canvas preview.
 - **Full Fontra Editing Core** — all standard Fontra editing features (glyph drawing, variable font axes, anchors, components, etc.) are included.
@@ -40,16 +40,16 @@ Your fonts stay entirely on your computer and are never uploaded anywhere.
 
 ## Supported File Formats
 
-| Format | Read | Write |
-|---|:---:|:---:|
-| `.fontra` | ✅ | ✅ |
-| `.ufo` | ✅ | ✅ |
-| `.designspace` | ✅ | ✅ |
-| `.rcjk` | ✅ | ✅ |
-| `.glyphs` / `.glyphspackage` | ✅ | ✅ (partial) |
-| `.ttf` / `.otf` | ✅ | ✅ (via compile) |
-| `.woff` / `.woff2` | ✅ | — |
-| `.ttx` | ✅ | — |
+| Format | Read | Write |ColorV0|ColorV1|
+|---|:---:|:---:|:---:|:---:|:---:|
+| `.fontra` | ✅ | ✅ |-| ✅ |
+| `.ufo` | ✅ | ✅ |✅ | - |
+| `.designspace` | ✅ | ✅ |✅ | - |
+| `.rcjk` | ✅ | ✅ | - | - |
+| `.glyphs` / `.glyphspackage` | ✅ | ✅ (partial) | - | - |
+| `.ttf` / `.otf` | ✅ | ✅ (via compile) |  ✅ | ✅ |
+| `.woff` / `.woff2` | ✅ | — |- | - |
+| `.ttx` | ✅ | — | - | - |
 
 ---
 
@@ -57,10 +57,7 @@ Your fonts stay entirely on your computer and are never uploaded anywhere.
 
 Download the latest release for your platform from the [Releases page](https://github.com/mitradranirban/colr-pak/releases/latest):
 
-- **macOS** — `Color-Pak-macOS.dmg`
-- **Windows** — `Color-Pak-Windows.exe`
-- **Linux** — `colorpak` (standalone binary)
-
+ Read [Installation instruction](INSTALLATION.md)
 No installation of Python or any other dependency is required — Color Pak ships as a self-contained binary.
 
 ---
@@ -134,7 +131,7 @@ Contributions to the upstream project that are not color-specific should ideally
 Color Pak inherits the GPL3 license of the Fontra project. See [LICENSE](LICENSE) for details.
 
 Original Fontra © Google LLC, Just van Rossum.
-Color Pak extensions © contributors of this fork.
+Color Pak extensions 🄯 [contributors of this fork](CONTRIBUTORS).
 
 ---
 

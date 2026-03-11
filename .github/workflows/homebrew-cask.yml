@@ -19,7 +19,7 @@ jobs:
     - name: Download macOS binary
       uses: actions/download-artifact@v4
       with:
-        name: colrpak-macos-latest  # Assuming this matches your build job's artifact name
+        name: colrpak-macos-latest
         path: artifacts
 
     - name: Generate Cask
@@ -27,7 +27,7 @@ jobs:
         cd artifacts
         SHA256=$(shasum -a 256 colrpak-macos.zip | cut -d' ' -f1)
         echo "SHA256=$SHA256" >> $GITHUB_ENV
-        
+
         # Use release tag if available, otherwise prompt/manual version
         if [ "${{ github.event_name }}" = "release" ]; then
           VERSION="${{ github.event.release.tag_name }}"
@@ -66,40 +66,6 @@ jobs:
         git push origin main
 
     - name: Upload Cask artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: colr-pak-cask
-        path: tap/Casks/colr-pak.rb
-        
-          url "https://github.com/mitradranirban/colr-pak/releases/download/\${version}/colr-pak-macos.zip"
-          name "Colr Pak"
-          desc "Standalone COLRv0/COLRv1 color font editor"
-          homepage "https://github.com/mitradranirban/colr-pak"
-
-          app "Color Pak.app"
-
-          postflight do
-            system "xattr", "-r", "-d", "com.apple.quarantine", "#{appdir}/Color Pak.app"
-            system "xattr", "-r", "-d", "com.apple.metadata:kMDItemWhereFroms", "#{appdir}/Color Pak.app"
-          end
-
-          zap trash: [
-            "~/Library/Application Support/xyz.fontra/ColorPak",
-            "~/Library/Preferences/xyz.fontra.ColorPak.plist"
-          ]
-        end
-        EOF
-
-    - name: Commit Cask
-      run: |
-        cd tap
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-        git add Casks/colr-pak.rb
-        git commit -m "colr-pak $VERSION ($SHA256)" || exit 0
-        git push origin main
-
-    - name: Upload Cask
       uses: actions/upload-artifact@v4
       with:
         name: colr-pak-cask
