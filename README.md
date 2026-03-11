@@ -41,7 +41,7 @@ Your fonts stay entirely on your computer and are never uploaded anywhere.
 ## Supported File Formats
 
 | Format | Read | Write |ColorV0|ColorV1|
-|---|:---:|:---:|:---:|:---:|:---:|
+|---|:---:|:---:|:---:|:---:|
 | `.fontra` | ✅ | ✅ |-| ✅ |
 | `.ufo` | ✅ | ✅ |✅ | - |
 | `.designspace` | ✅ | ✅ |✅ | - |
