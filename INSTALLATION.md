@@ -64,14 +64,14 @@ If you don't have Homebrew yet, install it by running this in Terminal:
 ```
 ### Step 2: Add the Custom Tap
 Since colr-pak is distributed via a third-party tap (not the main Homebrew repository), you must add it first:
-​```
+```
 brew tap mitradranirban/tap
 ```
 
 ### Step 3: Install colr-pak
 
 Install the app using the --cask flag and --no-quarantine to bypass macOS Gatekeeper for this unsigned app:
-​```
+```
 brew install --cask --no-quarantine mitradranirban/tap/colr-pak
 ```
 
@@ -79,7 +79,7 @@ brew install --cask --no-quarantine mitradranirban/tap/colr-pak
 
 ### Step 4: If the App Still Won't Open
 On Apple Silicon Macs (M1/M2/M3), the quarantine attribute sometimes persists even after installation. If you see a "colr-pak is damaged and can't be opened" message, remove it manually by writing this command in terminal:
-​```
+```
 sudo xattr -dr com.apple.quarantine /Applications/colrpak.app
 ```
 
