@@ -4,7 +4,7 @@
 
 1. Open your browser and go to Colr Pak  [Release Section](https://github.com/mitradranirban/colr-pak/releases/latest)
 
-2. Under Assets, download the  Linux   file `colrpak-linux.tar.gz`
+2. Under Assets, download the  Linux   file `colrpak-linux.tar.gz` or `colrpak-linux-arm64.tar.gz`
 
 3. Right click and select Extract
 
@@ -87,9 +87,9 @@ sudo xattr -dr com.apple.quarantine /Applications/colrpak.app
 
 Alternatively, you can right-click the app in Finder → Open → click Open in the dialog to approve it once.
 
-### Step 5: Build from source 
+### Step 5: Build from source
 
-If it still doesn't work in Apple M1/M2/M3 etc for Apple gatekeeper policy, you can build from source as indicated in README which will self sign your app. 
+If it still doesn't work in Apple M1/M2/M3 etc for Apple gatekeeper policy, you can build from source as indicated in README which will self sign your app.
 ### Step 6: Launch colr-pak
 
 Open colr-pak from your Applications folder or via Launchpad

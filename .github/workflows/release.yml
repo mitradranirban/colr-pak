@@ -4,14 +4,14 @@ on:
   push:
     tags:
       - 'v*'
-    workflow dispatch:
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest, windows-latest]
 
     steps:
     - uses: actions/checkout@v4
@@ -43,20 +43,27 @@ jobs:
     - name: Build with PyInstaller
       run: pyinstaller FontraPak.spec -y
 
-    - name: Package Linux
+    - name: Package Linux (x86_64)
       if: matrix.os == 'ubuntu-latest'
       run: |
         chmod +x dist/colrpak
         tar -czf colrpak-linux.tar.gz -C dist colrpak
 
-    - name: Package macOS app
+    - name: Package Linux (ARM64)
+      if: matrix.os == 'ubuntu-24.04-arm'
+      run: |
+        chmod +x dist/colrpak
+        tar -czf colrpak-linux-arm64.tar.gz -C dist colrpak
+
+    - name: Package and sign macOS app
       if: runner.os == 'macOS'
       run: |
-        # Debug: list what's actually in dist/
         ls -la dist/
-        # Zip the correct app bundle (with proper quoting for spaces)
+        codesign --force --deep --sign - "dist/Colr Pak.app"
+        codesign --verify --deep --strict "dist/Colr Pak.app"
         ditto -c -k --sequesterRsrc --keepParent "dist/Colr Pak.app" colrpak-macos.zip
-    
+
+
     - name: Package Windows
       if: matrix.os == 'windows-latest'
       shell: powershell
@@ -82,6 +89,7 @@ jobs:
       with:
         files: |
           dist/colrpak-ubuntu-latest/colrpak-linux.tar.gz
+          dist/colrpak-ubuntu-24.04-arm/colrpak-linux-arm64.tar.gz
           dist/colrpak-macos-latest/colrpak-macos.zip
           dist/colrpak-windows-latest/colrpak-windows.zip
         generate_release_notes: true

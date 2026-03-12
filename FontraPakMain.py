@@ -6,6 +6,7 @@ import os
 import pathlib
 import secrets
 import signal
+import subprocess
 import sys
 import tempfile
 import threading
@@ -202,7 +203,7 @@ class FontraMainWidget(QMainWindow):
         layout.addWidget(self.sampleTextBox, 3, 0, 1, 2)
 
         layout.addWidget(
-            QLabel(f"Colr Pak v0.1.0 (based on fontra {fontraVersion})"), 4, 0
+            QLabel(f"Colr Pak v0.1.1 (based on fontra {fontraVersion})"), 4, 0
         )
 
         if sys.platform in {"darwin", "win32"}:
@@ -333,26 +334,58 @@ class FontraMainWidget(QMainWindow):
         self.doExportAs(sourcePath, destPath, fileExtension)
 
     def doExportAs(self, sourcePath, destPath, fileExtension):
-        logFilePath = tempfile.NamedTemporaryFile().name
+        logFilePath = tempfile.NamedTemporaryFile(delete=False).name  # Keep for errors
+        source_ext = sourcePath.suffix.lower()
+        is_fontra_ttf_otf = source_ext == ".fontra" and fileExtension in {"ttf", "otf"}
 
-        exportProcess = multiprocessing.Process(
-            target=exportFontToPath,
-            args=(sourcePath, destPath, fileExtension, logFilePath),
-        )
+        if is_fontra_ttf_otf:
+            # Pure fontra-compile
+            def run_compile():
+                try:
+                    cmd = ["fontra-compile", str(sourcePath), str(destPath)]
+                    result = subprocess.run(
+                        cmd, capture_output=True, text=True, cwd=sourcePath.parent
+                    )
+                    with open(logFilePath, "w", encoding="utf-8") as f:
+                        f.write(
+                            f"STDOUT:\n{result.stdout}\n"
+                            f"STDERR:\n{result.stderr}\n"
+                            f"RC: {result.returncode}"
+                        )
+                    return result.returncode
+                except Exception as e:
+                    with open(logFilePath, "w") as f:
+                        f.write(f"Exception: {e}\n{traceback.format_exc()}")
+                    return 1
+
+            exportProcess = multiprocessing.Process(target=run_compile)
+            progressText = "Compiling with fontra-compile (COLR included)"
+        else:
+            # Original workflow (fix PyInstaller separately)
+            def run_original():
+                asyncio.run(exportFontToPathAsync(sourcePath, destPath, fileExtension))
+
+            exportProcess = multiprocessing.Process(
+                target=run_original,
+                args=(sourcePath, destPath, fileExtension, logFilePath),
+            )
+            progressText = f"Exporting via workflow ({fileExtension})"
 
         cancelled = False
 
         def cancelExport():
             nonlocal cancelled
             cancelled = True
-            os.kill(exportProcess.pid, signal.SIGINT)
+            try:
+                os.kill(exportProcess.pid, signal.SIGINT)
+            except ProcessLookupError:
+                pass
+            except OSError:
+                pass  # Already done/exited
 
-        progressDialog = QProgressDialog(
-            f"Exporting “{os.path.basename(destPath)}”", "Cancel", 0, 0
-        )
+        progressDialog = QProgressDialog(progressText, "Cancel", 0, 0)
         progressCancelButton = QPushButton("Cancel")
         progressCancelButton.clicked.connect(cancelExport)
-
         progressDialog.setCancelButton(progressCancelButton)
         progressDialog.setWindowTitle(f"Export as {fileExtension}")
         progressDialog.show()
@@ -362,25 +395,25 @@ class FontraMainWidget(QMainWindow):
         def exportFinished():
             if cancelled:
                 return
-
             progressDialog.cancel()
-
             try:
                 if exportProcess.exitcode:
-                    with open(logFilePath, encoding="utf-8") as logFile:
-                        logFile.seek(0)
-                        logData = logFile.read()
-                        logLines = logData.splitlines()
-                        infoText = (
-                            logLines[-1] if logLines else "The reason is not clear."
-                        )
-                        showMessageDialog(
-                            "The font could not be exported",
-                            infoText,
-                            detailedText=logData,
-                        )
+                    with open(logFilePath, "r", encoding="utf-8") as f:
+                        logData = f.read()
+                    logLines = logData.splitlines()
+                    infoText = logLines[-1] if logLines else "Unknown error"
+                    showMessageDialog("Export failed", infoText, detailedText=logData)
+                elif is_fontra_ttf_otf:
+                    showMessageDialog(
+                        "Success!",
+                        "COLR/CPAL tables included.",
+                        icon=QMessageBox.Icon.Information,
+                    )
             finally:
-                os.unlink(logFilePath)
+                try:
+                    os.unlink(logFilePath)
+                except OSError:
+                    pass  # Already done/exited
 
         def exportProcessJoin():
             exportProcess.join()
@@ -437,7 +470,7 @@ def fetchLatestReleaseInfo() -> tuple[str, str | None]:
 
 
 def _fetchLatestReleaseInfo() -> tuple[str, str | None]:
-    url = "https://api.github.com/repos/fontra/fontra-pak/releases/latest"
+    url = "https://api.github.com/repos/mitradranirban/colr-pak/releases/latest"
     response = urlopen(url)
     latestRelease = json.loads(response.read().decode("utf-8"))
     latestVersion = latestRelease["tag_name"]

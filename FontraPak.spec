@@ -3,7 +3,7 @@ import sys
 from importlib.metadata import PackageNotFoundError
 from PyInstaller.utils.hooks import collect_all, copy_metadata
 from fontra import __version__ as fontraVersion
-COLR_PAK_VERSION = "0.1.0"
+COLR_PAK_VERSION = "0.1.1"
 
 def buildWindowsVersionResource():
     from PyInstaller.utils.win32.versioninfo import (
@@ -45,7 +45,7 @@ def buildWindowsVersionResource():
                             ),
                             StringStruct("OriginalFilename", "Colr Pak.exe"),
                             StringStruct("ProductName", "Colr Pak"),
-                            StringStruct("ProductVersion", fontraVersion),
+                            StringStruct("ProductVersion", COLR_PAK_VERSION),
                         ],
                     )
                 ]
@@ -57,8 +57,35 @@ def buildWindowsVersionResource():
 
 datas = []
 binaries = []
-hiddenimports = []
-
+hiddenimports = [
+    "paintcompiler",
+    "fontra.__main__",
+    "fontra.backends.fontra",
+    "fontra.backends.opentype",
+    "fontra.backends.workflow",
+    "fontra.core.colrv1builder",
+    "fontra.core.threading",
+    "fontra.workflow.actions.colr",
+    "fontra.workflow.command",
+    "fontra_compile",
+    "fontra_compile.__main__",
+    "fontra_compile.compile_fontc_action",
+    "fontra_compile.compile_varc_action",
+    "fontra_glyphs",
+    "fontra_glyphs._version",
+    "fontra_glyphs.backend",
+    "fontra_rcjk",
+    "fontra_rcjk.backend_fs",
+    "fontra_rcjk.backend_mysql",
+    "fontra_rcjk.client",
+    "fontra_rcjk.client_async",
+    "fontra_rcjk.projectmanager",
+    "cffsubr.__main__",
+    "openstep_plist.__main__",
+    "openstep_plist._test",
+    "openstep_plist.util",
+    "glyphsLib.data",
+]
 modules_to_collect_all = [
     "fontra",
     "fontra_compile",
@@ -67,6 +94,7 @@ modules_to_collect_all = [
     "cffsubr",
     "openstep_plist",
     "glyphsLib.data",
+    "paintcompiler",
 ]
 for module_name in modules_to_collect_all:
     tmp_ret = collect_all(module_name)
