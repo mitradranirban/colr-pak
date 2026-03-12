@@ -70,9 +70,11 @@ brew tap mitradranirban/tap
 
 ### Step 3: Install colr-pak
 
-Install the app using the --cask flag and --no-quarantine to bypass macOS Gatekeeper for this unsigned app:
+Install the app using the --cask flag and remove quarantine for macOS Gatekeeper for this unsigned app:
 ```
-brew install --cask --no-quarantine mitradranirban/tap/colr-pak
+bash
+brew install --cask mitradranirban/tap/colr-pak
+xattr -dr com.apple.quarantine "/Applications/Color Pak.app"
 ```
 
    Note: The --no-quarantine flag is needed because colr-pak is currently unsigned. Without it, macOS will block the app from launching with a "developer cannot be verified" error
@@ -85,8 +87,13 @@ sudo xattr -dr com.apple.quarantine /Applications/colrpak.app
 
 Alternatively, you can right-click the app in Finder → Open → click Open in the dialog to approve it once.
 
-### Step 5: Launch colr-pak
+### Step 5: Build from source 
+
+If it still doesn't work in Apple M1/M2/M3 etc for Apple gatekeeper policy, you can build from source as indicated in README which will self sign your app. 
+### Step 6: Launch colr-pak
 
 Open colr-pak from your Applications folder or via Launchpad
+
+
 
 The app starts a local Fontra server and automatically opens in your browser for editing COLRv1 color fonts
