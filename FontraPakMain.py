@@ -52,6 +52,8 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
+COLR_PAK_VERSION = "0.1.2"
+
 commonCSS = """
 border-radius: 20px;
 border-style: dashed;
@@ -76,16 +78,19 @@ border: 5px solid gray;
 )
 
 mainText = """
-<span style="font-size: 40px;">Drop font files here </span>
+<span style="font-size: 40px; color: blue;">Drop font files here</span>
 <br>
-Font files are not uploaded but processed locally
+<span style="color: red;">Font files are not uploaded
+but processed locally</span>
 
 <br>
 COLR Pak is an unofficial fork of Fontra font editor for COLR fonts
 <br>
 It reads and writes .ufo, .designspace for COLR V0 format fonts
-and .fontra format for color v1 fonts and partial support for reading and
-writing .glyphs and .glyphspackage files (without colr data).
+<br>
+and .fontra format for color v1 fonts. It has partial support for reading
+<br>
+ and writing .glyphs and .glyphspackage files (without colr data).
 <br>
 Additionally, it can extract color layers and palletes from .ttf file
 """
@@ -203,10 +208,12 @@ class FontraMainWidget(QMainWindow):
         layout.addWidget(self.sampleTextBox, 3, 0, 1, 2)
 
         layout.addWidget(
-            QLabel(f"Colr Pak v0.1.1 (based on fontra {fontraVersion})"), 4, 0
+            QLabel(f"Colr Pak {COLR_PAK_VERSION} (based on fontra {fontraVersion})"),
+            4,
+            0,
         )
 
-        if sys.platform in {"darwin", "win32"}:
+        if sys.platform in {"darwin", "win32", "linux"}:
             self.downloadButton = QPushButton("Download latest Colr Pak", self)
             self.downloadButton.setSizePolicy(
                 QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed
@@ -334,42 +341,22 @@ class FontraMainWidget(QMainWindow):
         self.doExportAs(sourcePath, destPath, fileExtension)
 
     def doExportAs(self, sourcePath, destPath, fileExtension):
-        logFilePath = tempfile.NamedTemporaryFile(delete=False).name  # Keep for errors
-        source_ext = sourcePath.suffix.lower()
-        is_fontra_ttf_otf = source_ext == ".fontra" and fileExtension in {"ttf", "otf"}
+        logFilePath = tempfile.NamedTemporaryFile(delete=False).name
+        sourceExt = sourcePath.suffix.lower()
+        isfontrattfotf = sourceExt == ".fontra" and fileExtension in ("ttf", "otf")
 
-        if is_fontra_ttf_otf:
-            # Pure fontra-compile
-            def run_compile():
-                try:
-                    cmd = ["fontra-compile", str(sourcePath), str(destPath)]
-                    result = subprocess.run(
-                        cmd, capture_output=True, text=True, cwd=sourcePath.parent
-                    )
-                    with open(logFilePath, "w", encoding="utf-8") as f:
-                        f.write(
-                            f"STDOUT:\n{result.stdout}\n"
-                            f"STDERR:\n{result.stderr}\n"
-                            f"RC: {result.returncode}"
-                        )
-                    return result.returncode
-                except Exception as e:
-                    with open(logFilePath, "w") as f:
-                        f.write(f"Exception: {e}\n{traceback.format_exc()}")
-                    return 1
-
-            exportProcess = multiprocessing.Process(target=run_compile)
+        if isfontrattfotf:
+            exportProcess = multiprocessing.Process(
+                target=exportFontToPathCompile,
+                args=(sourcePath, destPath, logFilePath),
+            )
             progressText = "Compiling with fontra-compile (COLR included)"
         else:
-            # Original workflow (fix PyInstaller separately)
-            def run_original():
-                asyncio.run(exportFontToPathAsync(sourcePath, destPath, fileExtension))
-
             exportProcess = multiprocessing.Process(
-                target=run_original,
+                target=exportFontToPath,
                 args=(sourcePath, destPath, fileExtension, logFilePath),
             )
-            progressText = f"Exporting via workflow ({fileExtension})"
+            progressText = f"Exporting via workflow {fileExtension}"
 
         cancelled = False
 
@@ -378,10 +365,8 @@ class FontraMainWidget(QMainWindow):
             cancelled = True
             try:
                 os.kill(exportProcess.pid, signal.SIGINT)
-            except ProcessLookupError:
+            except (ProcessLookupError, OSError):
                 pass
-            except OSError:
-                pass  # Already done/exited
 
         progressDialog = QProgressDialog(progressText, "Cancel", 0, 0)
         progressCancelButton = QPushButton("Cancel")
@@ -389,7 +374,6 @@ class FontraMainWidget(QMainWindow):
         progressDialog.setCancelButton(progressCancelButton)
         progressDialog.setWindowTitle(f"Export as {fileExtension}")
         progressDialog.show()
-
         exportProcess.start()
 
         def exportFinished():
@@ -403,7 +387,7 @@ class FontraMainWidget(QMainWindow):
                     logLines = logData.splitlines()
                     infoText = logLines[-1] if logLines else "Unknown error"
                     showMessageDialog("Export failed", infoText, detailedText=logData)
-                elif is_fontra_ttf_otf:
+                elif isfontrattfotf:
                     showMessageDialog(
                         "Success!",
                         "COLR/CPAL tables included.",
@@ -413,7 +397,7 @@ class FontraMainWidget(QMainWindow):
                 try:
                     os.unlink(logFilePath)
                 except OSError:
-                    pass  # Already done/exited
+                    pass
 
         def exportProcessJoin():
             exportProcess.join()
@@ -481,6 +465,8 @@ def _fetchLatestReleaseInfo() -> tuple[str, str | None]:
             assetNamePart = "MacOS"
         case "win32":
             assetNamePart = "Windows"
+        case "linux":
+            assetNamePart = "Linux"
 
     if assetNamePart is None:
         return latestVersion, None
@@ -492,14 +478,35 @@ def _fetchLatestReleaseInfo() -> tuple[str, str | None]:
     return latestVersion, assetInfo["browser_download_url"]
 
 
+# Upstream-compatible generic export (all formats except fontra→ttf/otf via compile)
 def exportFontToPath(sourcePath, destPath, fileExtension, logFilePath):
     logFile = open(logFilePath, "w")
     sys.stdout = sys.stderr = logFile
-
     try:
         asyncio.run(exportFontToPathAsync(sourcePath, destPath, fileExtension))
     finally:
         logFile.flush()
+
+
+# Colr Pak addition: fontra-compile path for .fontra → .ttf/.otf with COLR tables
+def exportFontToPathCompile(sourcePath, destPath, logFilePath):
+    try:
+        cmd = ["fontra-compile", str(sourcePath), str(destPath)]
+        result = subprocess.run(
+            cmd, capture_output=True, text=True, cwd=sourcePath.parent
+        )
+        with open(logFilePath, "w", encoding="utf-8") as f:
+            f.write(
+                f"STDOUT\n{result.stdout}\nSTDERR\n{result.stderr}\nRC {result.returncode}"
+            )
+        sys.exit(result.returncode)
+    except Exception as e:
+        with open(logFilePath, "w") as f:
+            f.write(f"Exception {e}\n{traceback.format_exc()}")
+        sys.exit(1)
+
+
+# exportFontToPathAsync stays identical to upstream — no changes needed
 
 
 async def exportFontToPathAsync(sourcePath, destPath, fileExtension):
