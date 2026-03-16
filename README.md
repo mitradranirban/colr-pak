@@ -23,7 +23,7 @@
 **Color Pak** is a cross-platform desktop application for designing and editing color fonts. It is a fork of [Fontra Pak](https://github.com/fontra/fontra-pak), extended with dedicated tooling for COLRv0 and COLRv1 color font authoring — including a visual paint graph editor, palette management, and gradient handles directly on the canvas.
 
 Your fonts stay entirely on your computer and are never uploaded anywhere.
-
+![colrpak screenshot](colrpakshot.png)
 ---
 
 ## Key Features
