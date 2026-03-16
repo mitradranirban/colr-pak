@@ -52,7 +52,7 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
-COLR_PAK_VERSION = "0.1.2"
+COLR_PAK_VERSION = "0.1.3"
 
 commonCSS = """
 border-radius: 20px;
@@ -506,7 +506,7 @@ def exportFontToPathCompile(sourcePath, destPath, logFilePath):
         sys.exit(1)
 
 
-# exportFontToPathAsync stays identical to upstream — no changes needed
+# exportFontToPathAsync modified to remove drop-unreachable-glyphs filter
 
 
 async def exportFontToPathAsync(sourcePath, destPath, fileExtension):
@@ -537,7 +537,6 @@ async def exportFontToPathAsync(sourcePath, destPath, fileExtension):
             + [
                 dict(filter="decompose-composites", onlyVariableComposites=True),
                 dict(filter="propagate-anchors"),
-                dict(filter="drop-unreachable-glyphs"),
                 dict(
                     output="compile-fontmake",
                     destination=destPath.name,

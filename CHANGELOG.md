@@ -6,7 +6,10 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/mitradranirban/fontra-compile).
 
 ---
+## [v0.1.3] - 2026-03-16
 
+colr-pak 0.1.3
+Bugfix: Removed `drop-unreachable-glyphs` from the export workflow and `drop-unused-sources-and-layers` from the fontmake compile action in fontra-compile — both filters were silently stripping color layer glyphs before fontmake could build the COLR/CPAL tables, resulting in monochrome output.
 ## [v0.1.2] - 2026-03-15
 
 ### Colr Pak (`mitradranirban/colr-pak`)
@@ -35,32 +38,8 @@ built on [Fontra](https://github.com/fontra/fontra) and
   name references (`_setV1ArrayField`, `_writeV1Paint`) and correct
   `colorStops` nesting structure
 - `fix(colrv1)`: TTF COLRv1 paint loading, panel detection and rendering —
-  add `convertPaintGraph`/`convertColorLine` for fontTools raw format
-  conversion; fix COLRv0 TTF panel detection
-- `fix`: Add color palette support for UFO backend
+
 - Remove accidental `.bak` file from bisect
-
-#### Features
-- `feat(colrv1)`: Variable font support for `.fontra` sources + full paint
-  graph fixes — add `getTagLocation()`, `getPaintGraph()`, `resolveVal()`;
-  fix all 32 paint format handlers including composite modes, PaintGlyph,
-  bezier curves
-- `feat(color-layers)`: Add COLRv1 type-aware parameter UI with
-  `PAINT_PARAM_SCHEMA`, paired field rendering, `_setV1PaintParam()` mutator
-- `feat(color-palettes)`: Enhance palette panel — alpha slider, palette tab
-  strip, usage badges, remove buttons, `PALETTES_KEY` export
-- Add COLRv1 canvas renderer to visualization layer with proper clipping
-- Add switchable paint type selector in Color Paint V1 panel
-- Add `paintcompiler` base COLRv1 builder backend
-- Add keyframe changes support for variable COLRv1 parameters
-- Add color palette loading from OTFont
-- Add Google test COLRv1 font and OpenType backend tests
-- Color layer tab in frontend working
-- Color font generation through `ufo2ft` working
-
-#### Maintenance
-- Add missing translations (i18n strings for new color UI)
-- Add test font for COLRv1 testing
 - Rebased to current fontra `release/0.2.0`
 
 ---
@@ -87,6 +66,14 @@ built on [Fontra](https://github.com/fontra/fontra) and
   COLR and CPAL table compilation
 - Rebase to fontra `2026.3.2`
 
+
+#### Maintenance
+- Add missing translations (i18n strings for new color UI)
+- Add test font for COLRv1 testing
+#### Fixes
+ add `convertPaintGraph`/`convertColorLine` for fontTools raw format
+  conversion; fix COLRv0 TTF panel detection
+- `fix`: Add color palette support for UFO backend
 ---
 
 ## [v0.1.0] - 2026-03-10
@@ -98,3 +85,20 @@ built on [Fontra](https://github.com/fontra/fontra) and
 - Linux support added (in addition to macOS and Windows)
 - Homebrew Cask workflow with manual trigger support
 - Cross-platform release packaging (macOS, Windows, Linux)
+#### Features
+- `feat(colrv1)`: Variable font support for `.fontra` sources + full paint
+  graph fixes — add `getTagLocation()`, `getPaintGraph()`, `resolveVal()`;
+  fix all 32 paint format handlers including composite modes, PaintGlyph,
+  bezier curves
+- `feat(color-layers)`: Add COLRv1 type-aware parameter UI with
+  `PAINT_PARAM_SCHEMA`, paired field rendering, `_setV1PaintParam()` mutator
+- `feat(color-palettes)`: Enhance palette panel — alpha slider, palette tab
+  strip, usage badges, remove buttons, `PALETTES_KEY` export
+- Add COLRv1 canvas renderer to visualization layer with proper clipping
+- Add switchable paint type selector in Color Paint V1 panel
+- Add `paintcompiler` base COLRv1 builder backend
+- Add keyframe changes support for variable COLRv1 parameters
+- Add color palette loading from OTFont
+- Add Google test COLRv1 font and OpenType backend tests
+- Color layer tab in frontend working
+- Color font generation through `ufo2ft` working

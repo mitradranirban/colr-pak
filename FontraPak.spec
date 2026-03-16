@@ -3,7 +3,7 @@ import sys
 from importlib.metadata import PackageNotFoundError
 from PyInstaller.utils.hooks import collect_all, copy_metadata
 from fontra import __version__ as fontraVersion
-COLR_PAK_VERSION = "0.1.2"
+COLR_PAK_VERSION = "0.1.3"
 
 def buildWindowsVersionResource():
     from PyInstaller.utils.win32.versioninfo import (
