@@ -1,72 +1,21 @@
-name: Update Homebrew Cask
+name: Notify tap on release
 
 on:
   release:
     types: [published]
-  workflow_dispatch:  # Manual trigger support
 
 jobs:
-  cask:
-    runs-on: macos-latest
+  notify-tap:
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout Homebrew tap
-      uses: actions/checkout@v4
-      with:
-        repository: mitradranirban/homebrew-tap
-        token: ${{ secrets.HOMEBREW_PAT }}
-        path: tap
-
-    - name: Download macOS binary
-      uses: actions/download-artifact@v4
-      with:
-        name: colrpak-macos-latest
-        path: artifacts
-
-    - name: Generate Cask
-      run: |
-        cd artifacts
-        SHA256=$(shasum -a 256 colrpak-macos.zip | cut -d' ' -f1)
-        echo "SHA256=$SHA256" >> $GITHUB_ENV
-
-        # Use release tag if available, otherwise prompt/manual version
-        if [ "${{ github.event_name }}" = "release" ]; then
-          VERSION="${{ github.event.release.tag_name }}"
-        else
-          VERSION="dev-$(date +%Y%m%d-%H%M%S)"  # Fallback for manual runs
-        fi
-        echo "VERSION=$VERSION" >> $GITHUB_ENV
-
-        mkdir -p ../tap/Casks
-        cat > ../tap/Casks/colr-pak.rb << EOF
-        cask "colr-pak" do
-          version "${VERSION}"
-          sha256 "${SHA256}"
-
-          url "https://github.com/mitradranirban/colr-pak/releases/download/\${version}/colrpak-macos.zip"
-          name "Colr Pak"
-          desc "Standalone COLRv0/COLRv1 color font editor"
-          homepage "https://github.com/mitradranirban/colr-pak"
-
-          app "Color Pak.app"
-
-          zap trash: [
-            "~/Library/Application Support/xyz.fontra/ColorPak",
-            "~/Library/Preferences/xyz.fontra.ColorPak.plist"
-          ]
-        end
-        EOF
-
-    - name: Commit and Push Cask
-      run: |
-        cd tap
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-        git add Casks/colr-pak.rb
-        git commit -m "colr-pak ${{ env.VERSION }} (${{ env.SHA256 }})" || exit 0
-        git push origin main
-
-    - name: Upload Cask artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: colr-pak-cask
-        path: tap/Casks/colr-pak.rb
+      - name: Trigger tap update
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.HOMEBREW_PAT }}
+          repository: mitradranirban/homebrew-tap
+          event-type: colr-pak-release
+          client-payload: >-
+            {
+              "version": "${{ github.ref_name }}",
+              "zip_url": "https://github.com/mitradranirban/colr-pak/releases/download/${{ github.ref_name }}/colrpak-macos.zip"
+            }
