@@ -3,9 +3,45 @@
 All notable changes to Colr Pak and its components are documented here.
 Colr Pak is a fork of [Fontra Pak](https://github.com/fontra/fontra-pak),
 built on [Fontra](https://github.com/fontra/fontra) and
-[fontra-compile](https://github.com/mitradranirban/fontra-compile).
+[fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.2.0] - 2026-03-18
+
+### Colr Pak (`mitradranirban/colr-pak`)
+
+#### Features
+- Add on-screen **Paint Tool** (`edit-tools-paint`) for interactive COLRv1 editing:
+  - Drag-to-reposition handles for linear, radial, and sweep gradients
+  - Click-to-cycle `paletteIndex` for `PaintSolid` layers
+  - Dynamic cursor updates based on handle role under pointer
+  - Visualization layer drawing handle circles, diamond badges, and dashed connector lines between gradient control points
+- Rename app menu title from `Fontra Pak` to `Colr Pak` in `fontra-menus`
+- Add separator between palette number and number of entries in the color palette panel
+
+#### Bug Fixes
+- Fix import path in `colr.py` — use absolute instead of relative imports
+
+---
+
+### Fontra (`mitradranirban/fontra`, branch `fontra-color-support`)
+
+#### Features
+- Rebased to upstream Fontra `2026.3.4`
+
+#### Bug Fixes
+- Restore `paletteIndex` in gradient `colorStops` — `_convertColorLine` was reading `stop.Color?.PaletteIndex` but raw fontTools stores `PaletteIndex` directly on the stop object; all gradient palette indexes were defaulting to 0
+- Fix "add stop" button for COLRv1 gradients — fix method name references (`_setV1ArrayField`, `_writeV1Paint`) and correct `colorStops` nesting structure
+- Fix TTF COLRv1 paint loading, panel detection, and rendering
+
+---
+
+### fontra-compile (`mitradranirban/fontra-compile` branch `fontra-color-support` )
+
+#### Bug Fixes
+- Fix `copyFont` stripping color palette data from temporary UFO before compiling through fontmake, which caused color variable fonts to export as monochrome
+- Add function to prevent stripping of color palette data from `lib.plist` in variable font compilation
+
 ## [v0.1.3] - 2026-03-16
 
 colr-pak 0.1.3
