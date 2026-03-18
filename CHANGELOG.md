@@ -6,6 +6,19 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.2.1] — 2026-03-18
+### Fixed
+
+- **COLRv1 variable font compilation failure** — ModuleNotFoundError: No module named 'fontra_compile' at runtime caused by PyInstaller silently dropping fontra_compile.builder from the bundle
+- **Root cause**  — fontTools.ttLib.tables.otConverters has a circular dependency on otTables; when PyInstaller imported otConverters in isolation during static analysis the partial initialisation failure caused the entire fontra_compile package to be excluded
+- Fix 1 — Added pre-import of fontTools.ttLib.tables.otTables before otConverters at the top of FontraPak.spec to resolve the circular import before analysis begins
+- Fix 2 — Added fontTools, fontmake, ufo2ft to modules_to_collect_all so the full module graph is resolved before fontra_compile is analysed
+- Fix 3 — Added fontra_compile.builder and key fontTools.ttLib submodules explicitly to hiddenimports as a secondary safeguard
+
+### Verified
+
+COLRv1 variable font compiles and renders correctly with colour palette and variable axes intact
+
 ## [v0.2.0] - 2026-03-18
 
 ### Colr Pak (`mitradranirban/colr-pak`)

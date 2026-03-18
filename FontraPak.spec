@@ -1,9 +1,20 @@
-# -*- mode: python ; coding: utf-8 -*-
+
 import sys
 from importlib.metadata import PackageNotFoundError
 from PyInstaller.utils.hooks import collect_all, copy_metadata
 from fontra import __version__ as fontraVersion
-COLR_PAK_VERSION = "0.2.0"
+
+# ---------------------------------------------------------------------------
+# Fix: Pre-import fontTools circular dependency chain before PyInstaller
+# analysis begins. otConverters depends on otTables being initialized first;
+# importing them here in the correct order prevents the "partially initialized
+# module" error that causes PyInstaller to silently drop fontra_compile.builder.
+# ---------------------------------------------------------------------------
+import fontTools.ttLib.tables.otTables
+import fontTools.ttLib.tables.otConverters
+
+COLR_PAK_VERSION = "0.2.1"
+
 
 def buildWindowsVersionResource():
     from PyInstaller.utils.win32.versioninfo import (
@@ -58,7 +69,7 @@ def buildWindowsVersionResource():
 datas = []
 binaries = []
 hiddenimports = [
-    "paintcompiler",
+    # --- fontra core ---
     "fontra.__main__",
     "fontra.backends.fontra",
     "fontra.backends.opentype",
@@ -67,26 +78,69 @@ hiddenimports = [
     "fontra.core.threading",
     "fontra.workflow.actions.colr",
     "fontra.workflow.command",
+
+    # --- fontra_compile (builder was previously missing entirely) ---
     "fontra_compile",
     "fontra_compile.__main__",
+    "fontra_compile.builder",                   # fix: was not listed before
     "fontra_compile.compile_fontc_action",
     "fontra_compile.compile_varc_action",
+    "fontra_compile.compile_fontmake_action",
+
+    # --- fontra_glyphs ---
     "fontra_glyphs",
     "fontra_glyphs._version",
     "fontra_glyphs.backend",
+
+    # --- fontra_rcjk ---
     "fontra_rcjk",
     "fontra_rcjk.backend_fs",
     "fontra_rcjk.backend_mysql",
     "fontra_rcjk.client",
     "fontra_rcjk.client_async",
     "fontra_rcjk.projectmanager",
+
+    # --- other packages ---
+    "paintcompiler",
     "cffsubr.__main__",
     "openstep_plist.__main__",
     "openstep_plist._test",
     "openstep_plist.util",
     "glyphsLib.data",
+
+    # --- fontTools: explicit hidden imports to survive circular import issue ---
+    # otTables must appear before otConverters to mirror the pre-import order above
+    "fontTools.ttLib",
+    "fontTools.ttLib.ttFont",
+    "fontTools.ttLib.sfnt",
+    "fontTools.ttLib.woff2",
+    "fontTools.ttLib.ttCollection",
+    "fontTools.ttLib.tables",
+    "fontTools.ttLib.tables.DefaultTable",
+    "fontTools.ttLib.tables.otBase",
+    "fontTools.ttLib.tables.otTables",          # must be before otConverters
+    "fontTools.ttLib.tables.otConverters",      # fix: circular import culprit
+    "fontTools.ttLib.tables._c_m_a_p",
+    "fontTools.ttLib.tables._k_e_r_n",
+    "fontTools.feaLib.builder",
+    "fontTools.varLib",
+    "fontTools.varLib.instancer",
+    "fontTools.varLib.featureVars",
+    "fontTools.varLib.cff",
+    "fontTools.colorLib.unbuilder",
+    "fontTools.fontBuilder",
+    "fontTools.otlLib.optimize",
+    "fontTools.otlLib.optimize.gpos",
 ]
+
+# ---------------------------------------------------------------------------
+# modules_to_collect_all — fontTools and its dependents must come first so
+# the full module graph is resolved before fontra_compile is analysed.
+# ---------------------------------------------------------------------------
 modules_to_collect_all = [
+    "fontTools",        # fix: must be first — resolves dynamic imports for all below
+    "fontmake",         # fix: added — imported by fontra_compile.builder
+    "ufo2ft",           # fix: added — imported by fontra_compile.builder
     "fontra",
     "fontra_compile",
     "fontra_glyphs",
@@ -96,6 +150,7 @@ modules_to_collect_all = [
     "glyphsLib.data",
     "paintcompiler",
 ]
+
 for module_name in modules_to_collect_all:
     tmp_ret = collect_all(module_name)
     datas += tmp_ret[0]
