@@ -77,7 +77,7 @@ brew install --cask mitradranirban/tap/colr-pak
 xattr -dr com.apple.quarantine "/Applications/Colr Pak.app"
 ```
 
-   Note: The --no-quarantine flag is needed because colr-pak is currently unsigned. Without it, macOS will block the app from launching with a "developer cannot be verified" error
+   Note: The xattr flag is needed because colr-pak is currently unsigned. Without it, macOS will block the app from launching with a "developer cannot be verified" error
 
 ### Step 4: If the App Still Won't Open
 On Apple Silicon Macs (M1/M2/M3), the quarantine attribute sometimes persists even after installation. If you see a "colr-pak is damaged and can't be opened" message, remove it manually by writing this command in terminal:
