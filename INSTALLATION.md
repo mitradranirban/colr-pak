@@ -82,7 +82,7 @@ xattr -dr com.apple.quarantine "/Applications/Colr Pak.app"
 ### Step 4: If the App Still Won't Open
 On Apple Silicon Macs (M1/M2/M3), the quarantine attribute sometimes persists even after installation. If you see a "colr-pak is damaged and can't be opened" message, remove it manually by writing this command in terminal:
 ```
-sudo xattr -dr com.apple.quarantine /Applications/Colr Pak.app
+sudo xattr -dr com.apple.quarantine "/Applications/Colr Pak.app"
 ```
 
 Alternatively, you can right-click the app in Finder → Open → click Open in the dialog to approve it once.
