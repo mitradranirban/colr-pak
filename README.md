@@ -75,7 +75,7 @@ No installation of Python or any other dependency is required — Color Pak ship
 ```bash
 # 1. Clone this repository
 git clone https://github.com/mitradranirban/colr-pak
-cd fontra-pak
+cd colr-pak
 
 # 2. Create and activate a virtual environment
 python -m venv venv
