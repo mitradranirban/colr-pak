@@ -6,6 +6,18 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.2.2] - 2026-03-19
+**fontra_compile fix** : COLRv1 multi-source variation VarStore population
+
+- Correct _merge_scalar to return proper {location: value} dicts for paintcompiler
+- Build normalized VariationModel for paint merging (not glyph outline model)
+- Key format ((tag, loc),) so dict(key) → {tag: loc} works correctly
+- paintcompiler.make_var_scalar now receives absolute values at normalized locations
+- Produces Format=5 PaintVarLinearGradient + populated VarStore.RegionCount=1
+- pass userSpaceLocs to merge_paint_sources to fix VariationModel crash on fontTools ≥ 4.62.1
+
+Exports working variable COLR TTF.
+
 ## [v0.2.1] — 2026-03-18
 ### Fixed
 
