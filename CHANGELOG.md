@@ -6,6 +6,53 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.2.3] - 2026-03-20
+### Fixed - fontra-color-support
+fix(colrv1): correct PaintLinearGradient P2 projection, radial transform, and sweep gradient arc
+
+Three bugs in the COLRv1 canvas renderer caused gradient paints to render
+incorrectly relative to what the font specifies.
+
+--- PaintLinearGradient ---
+
+Canvas 2D createLinearGradient takes two points, but COLRv1 defines three:
+P0 (start), P1 (end), and P2 (rotation anchor). The renderer was passing
+P0→P1 directly and ignoring P2, producing wrong or reversed gradient axes.
+
+Fix: project P1 onto the perpendicular of (P2−P0) to derive the correct
+effective end point P1eff before calling createLinearGradient. When P2
+coincides with P0 (degenerate case) fall back to P1 unchanged.
+
+--- PaintRadialGradient ---
+
+COLRv1 radial gradients support an affine transform on the gradient cone,
+allowing elliptical or rotated radials. The renderer silently discarded
+paint.transform, so any non-circular radial gradient rendered as a plain
+symmetric cone.
+
+Fix: wrap the paint in ctx.save()/ctx.restore() and apply paint.transform
+via ctx.transform() before calling createRadialGradient, so the cone is
+correctly skewed/rotated by the context matrix.
+
+--- PaintSweepGradient ---
+
+Three separate errors:
+
+1. endAngle ignored — createConicGradient was called with only startAngle;
+   endAngle was never read. Partial arc sweeps always filled the full 360°.
+
+2. Wrong sweep direction — COLRv1 sweep angles are counter-clockwise (font
+   Y-up). Canvas 2D createConicGradient is clockwise (Y-down). The scene
+   transform already flips Y, so the angle must be negated to preserve the
+   correct sweep direction. Without this, all sweeps were mirrored.
+
+3. Color stops not remapped to arc — stops are defined by the font author
+   relative to the [startAngle, endAngle] arc (0→1 across that arc), but
+   were being passed directly to the conic gradient which interprets them
+   relative to a full 360° turn. Fix: scale each stop offset by
+   arcSpan / (2π) before calling _applyColorLine.
+
+Previews color v1 paint actually what is going to shipped in final font
 ## [v0.2.2] - 2026-03-19
 **fontra_compile fix** : COLRv1 multi-source variation VarStore population
 
