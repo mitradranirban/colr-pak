@@ -1,9 +1,11 @@
-name: Notify tap on release
-
 on:
   release:
     types: [published]
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release tag (e.g. vx.x.x)'
+        required: true
 
 jobs:
   notify-tap:
@@ -17,6 +19,7 @@ jobs:
           event-type: colr-pak-release
           client-payload: >-
             {
-              "version": "${{ github.ref_name }}",
-              "zip_url": "https://github.com/mitradranirban/colr-pak/releases/download/${{ github.ref_name }}/colrpak-macos.zip"
+              "version": "${{ github.event.inputs.version || github.ref_name }}",
+              "zip_url": "https://github.com/mitradranirban/colr-pak/releases/download/${{ github.event.inputs.version || github.ref_name }}/colrpak-macos.zip"
             }
+
