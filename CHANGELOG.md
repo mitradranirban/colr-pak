@@ -6,6 +6,20 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.2.4] - 2026-03-21
+### Fixed - fontra_compile@fontra-color-support
+fix1: post hhea and os2 metrics not transmitted from fontra format font-info
+ - Derive hhea and OS/2 metrics from shared source lineMetricsHorizontalLayout and customData instead of letting fontTools default to zeros
+
+ - Set italicAngle, underline position/thickness, and isFixedPitch for the post table from top-level fontInfo
+ - fix2: correct PaintSweepGradient angle variations and missing keys
+- Handle missing `startAngle` and `endAngle` keys in Fontra JSON by
+  providing a 0.0 fallback, preventing silent failures when defaults
+  are omitted.
+- Scale angles by 360.0 during `_merge_node` to convert Fontra's turn
+  fractions (0-1) into the degrees expected by fontTools/paintcompiler.
+  This fixes the issue where variation deltas in the VarStore were
+  calculated with the wrong magnitude.
 ## [v0.2.3] - 2026-03-20
 ### Fixed - fontra-color-support
 fix(colrv1): correct PaintLinearGradient P2 projection, radial transform, and sweep gradient arc
