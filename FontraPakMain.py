@@ -1,4 +1,5 @@
 import asyncio
+import io
 import json
 import logging
 import multiprocessing
@@ -6,7 +7,6 @@ import os
 import pathlib
 import secrets
 import signal
-import subprocess
 import sys
 import tempfile
 import threading
@@ -52,7 +52,7 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
-COLR_PAK_VERSION = "0.2.4"
+COLR_PAK_VERSION = "0.2.5"
 
 commonCSS = """
 border-radius: 20px;
@@ -489,19 +489,67 @@ def exportFontToPath(sourcePath, destPath, fileExtension, logFilePath):
 
 
 # Colr Pak addition: fontra-compile path for .fontra → .ttf/.otf with COLR tables
+
+
 def exportFontToPathCompile(sourcePath, destPath, logFilePath):
     try:
-        cmd = ["fontra-compile", str(sourcePath), str(destPath)]
-        result = subprocess.run(
-            cmd, capture_output=True, text=True, cwd=sourcePath.parent
-        )
+        # Import the entry point function from the bundled module
+        from fontra_compile.__main__ import main as compile_main
+
+        # Buffers to mimic subprocess capture_output=True
+        stdout_capture = io.StringIO()
+        stderr_capture = io.StringIO()
+
+        # Save original state
+        original_stdout = sys.stdout
+        original_stderr = sys.stderr
+        original_argv = sys.argv
+        original_cwd = os.getcwd()
+
+        returncode = 0
+
+        try:
+            # Redirect stdout/stderr to our buffers
+            sys.stdout = stdout_capture
+            sys.stderr = stderr_capture
+
+            # Mock the CLI arguments
+            sys.argv = ["fontra-compile", str(sourcePath), str(destPath)]
+
+            # Mimic cwd=sourcePath.parent
+            os.chdir(sourcePath.parent)
+
+            # Execute the packed compiler natively
+            compile_main()
+
+        except SystemExit as exit_exc:
+            # Capture the return code if the compiler calls sys.exit()
+            if exit_exc.code is not None:
+                returncode = exit_exc.code if isinstance(exit_exc.code, int) else 1
+        except Exception:
+            # If the compiler crashes without sys.exit, log it and set RC 1
+            traceback.print_exc()
+            returncode = 1
+        finally:
+            # Restore the environment completely
+            sys.stdout = original_stdout
+            sys.stderr = original_stderr
+            sys.argv = original_argv
+            os.chdir(original_cwd)
+
+        # Write the log file exactly as the original subprocess did
         with open(logFilePath, "w", encoding="utf-8") as f:
             f.write(
-                f"STDOUT\n{result.stdout}\nSTDERR\n{result.stderr}\nRC {result.returncode}"
+                f"STDOUT\n{stdout_capture.getvalue()}\n"
+                f"STDERR\n{stderr_capture.getvalue()}\n"
+                f"RC {returncode}"
             )
-        sys.exit(result.returncode)
+
+        sys.exit(returncode)
+
     except Exception as e:
-        with open(logFilePath, "w") as f:
+        # Catch any catastrophic setup failures
+        with open(logFilePath, "w", encoding="utf-8") as f:
             f.write(f"Exception {e}\n{traceback.format_exc()}")
         sys.exit(1)
 
@@ -734,5 +782,10 @@ def main():
 
 
 if __name__ == "__main__":
+    # 1. Intercepts PyInstaller background workers
     multiprocessing.freeze_support()
+    try:
+        multiprocessing.set_start_method("spawn")
+    except RuntimeError:
+        pass
     main()

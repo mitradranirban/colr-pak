@@ -22,4 +22,3 @@ jobs:
               "version": "${{ github.event.inputs.version || github.ref_name }}",
               "zip_url": "https://github.com/mitradranirban/colr-pak/releases/download/${{ github.event.inputs.version || github.ref_name }}/colrpak-macos.zip"
             }
-

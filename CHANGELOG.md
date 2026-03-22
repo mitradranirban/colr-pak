@@ -6,6 +6,22 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.2.5] -2026-03-22
+### Fixed
+fix: execute fontra_compile natively to resolve PyInstaller PATH issues
+
+Previously, `exportFontToPathCompile` used `subprocess.run(["fontra-compile"])`.
+When packaged with PyInstaller, this caused the application to search the system
+$PATH (e.g., ~/.local/bin) for the executable rather than using the bundled module,
+causing the compilation to fail.
+
+This replaces the subprocess call with a direct python import of the bundled
+`fontra_compile.__main__.main` function. To maintain exact compatibility with
+the existing UI log parser, this commit also:
+- Mocks `sys.argv` and `os.chdir` to simulate the external command environment
+- Captures stdout/stderr in memory using `io.StringIO`
+- Catches `SystemExit` to accurately report the return code in the log file
+
 ## [v0.2.4] - 2026-03-21
 ### Fixed - fontra_compile@fontra-color-support
 fix1: post hhea and os2 metrics not transmitted from fontra format font-info

@@ -87,7 +87,7 @@ jobs:
     - name: Create Release
       uses: softprops/action-gh-release@v2
       env:
-        GITHUB_TOKEN: ${{ secrets.HOMEBREW_PAT }} 
+        GITHUB_TOKEN: ${{ secrets.HOMEBREW_PAT }}
       with:
         files: |
           dist/colrpak-ubuntu-latest/colrpak-linux.tar.gz
