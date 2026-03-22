@@ -103,7 +103,13 @@ Color Pak is powered by two forked packages on the `fontra-color-support` branch
 
 ### COLRv1 Data Model
 
-COLRv1 paint data is stored in each glyph's `customData` under the key `colorv1`, as a JSON paint graph tree. Variable paint parameters hold per-axis keyframes (not separate masters), enabling a **masterless variation workflow** where color transforms, gradients, and opacity can vary independently along any design axis.
+COLRv1 paint data is stored in each glyph layer's `customData` under the key `colorv1`, as a JSON paint graph tree. This format is intended to be authored exclusively through Color Pak's visual paint graph editor — direct hand-editing of the JSON is not recommended, as the structure is tightly coupled to the editor's internal representation.
+
+
+For variable color fonts, the colorv1 paint graph is stored per variation layer (e.g., a layer named `COLOR=100` for a `COLOR` axis at value `100`). Each variation layer carries its own full paint graph with the axis-specific parameter values (gradient coordinates, transform values, alpha, etc.). At compile time, `fontra-compile` reads the `colorv1` blocks across all variation layers and synthesizes a masterless variation — meaning color parameters vary independently along design axes without requiring separate outline masters. The compiled font uses COLRv1's `ItemVariationStore` to encode the per-parameter deltas.
+
+
+This separation — variation data in named layers, masterless output from the compiler — keeps the `.fontra` source editable per-axis in Color Pak while producing a fully spec-compliant variable COLRv1 font on export.
 
 ---
 
