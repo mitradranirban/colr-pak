@@ -52,7 +52,7 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
-COLR_PAK_VERSION = "0.2.5"
+COLR_PAK_VERSION = "0.2.6"
 
 commonCSS = """
 border-radius: 20px;

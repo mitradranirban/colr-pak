@@ -6,6 +6,14 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.2.6] - 2026-03-23
+### Changed
+refactor: simplify CompileFontMakeAction to invoke fontmake directly from source path
+Remove intermediate UFO/designspace export step and helper functions
+(addInstances, addGlyphOrder, addMinimalGaspTable, _fixColorLibKeys).
+Instead, unwrap the backend chain to find the original source path and
+pass it directly to fontmake_main.
+
 ## [v0.2.5] -2026-03-22
 ### Fixed
 fix: execute fontra_compile natively to resolve PyInstaller PATH issues
