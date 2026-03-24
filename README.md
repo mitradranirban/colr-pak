@@ -22,7 +22,8 @@
   <strong>Documentation:</strong>
   <a href="https://github.com/mitradranirban/colr-pak/wiki">Wiki Home</a> ·
   <a href="https://github.com/mitradranirban/colr-pak/wiki/new">Start a New Project</a> ·
-  <a href="https://github.com/mitradranirban/colr-pak/wiki/palette">Color Palettes</a>
+  <a href="https://github.com/mitradranirban/colr-pak/wiki/palette">Color Palettes</a> .
+  <a href="https://github.com/mitradranirban/colr-pak/wiki/v0layers">Color V0 layers</a>
 </p>
 
 > [!NOTE]
