@@ -5,7 +5,7 @@
    viewBox="0 0 512 512"
    version="1.1"
    id="svg28"
-   sodipodi:docname="color-pak-icon.svg"
+   sodipodi:docname="colr-pak-icon.svg"
    inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -24,18 +24,18 @@
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
      inkscape:zoom="1.0722656"
-     inkscape:cx="313.35519"
-     inkscape:cy="331.07468"
+     inkscape:cx="174.39709"
+     inkscape:cy="228.02186"
      inkscape:window-width="1366"
-     inkscape:window-height="699"
+     inkscape:window-height="702"
      inkscape:window-x="0"
-     inkscape:window-y="32"
+     inkscape:window-y="26"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg28" />
   <!-- Background circle -->
   <ellipse
-     cx="264.04828"
-     cy="304.83051"
+     cx="254.88454"
+     cy="245.39267"
      fill="#111111"
      id="circle2"
      rx="217.90599"
@@ -43,8 +43,8 @@
      style="stroke-width:0.889182" />
   <!-- Fork handle -->
   <rect
-     x="331.763"
-     y="-346.34018"
+     x="283.61752"
+     y="-363.94778"
      width="36"
      height="200"
      rx="18"
@@ -55,8 +55,8 @@
   <!-- Fork prongs: RGB circles on top of three tines -->
   <!-- Left tine -->
   <rect
-     x="-167.96414"
-     y="-332.33536"
+     x="-185.90848"
+     y="-284.31448"
      width="24"
      height="90"
      rx="12"
@@ -66,16 +66,16 @@
      inkscape:transform-center-x="18.045166"
      inkscape:transform-center-y="-23.817959" />
   <circle
-     cx="-348.11041"
-     cy="158.379"
+     cx="-300.13266"
+     cy="176.43869"
      r="20"
      fill="#ff5555"
      id="circle10"
      transform="rotate(-90.071038)" />
   <!-- Middle tine -->
   <rect
-     x="-252.63753"
-     y="-340.80072"
+     x="-270.70709"
+     y="-292.82681"
      width="24"
      height="100"
      rx="12"
@@ -83,16 +83,16 @@
      id="rect12"
      transform="rotate(179.91705)" />
   <circle
-     cx="-352.71146"
-     cy="238.08206"
+     cx="-304.7337"
+     cy="256.14175"
      r="20"
      fill="#55ff55"
      id="circle14"
      transform="rotate(-90.071038)" />
   <!-- Right tine -->
   <rect
-     x="-342.44028"
-     y="-330.76926"
+     x="-359.58865"
+     y="-282.45825"
      width="24"
      height="90"
      rx="12"
@@ -102,8 +102,8 @@
      inkscape:transform-center-x="1.5078044"
      inkscape:transform-center-y="-32.946742" />
   <circle
-     cx="-351.47833"
-     cy="323.66476"
+     cx="-303.50058"
+     cy="341.72409"
      r="20"
      fill="#5599ff"
      id="circle18"
@@ -111,24 +111,24 @@
   <!-- Subtle highlight on handle -->
   <!-- Optional tiny inner circle to suggest “color spot” in each prong -->
   <circle
-     cx="-345.44608"
-     cy="156.32523"
+     cx="-297.46832"
+     cy="174.38492"
      r="6"
      fill="#ffffff"
      opacity="0.8"
      id="circle22"
      transform="rotate(-90.071038)" />
   <circle
-     cx="-350.60147"
-     cy="238.00919"
+     cx="-302.62372"
+     cy="256.06888"
      r="6"
      fill="#ffffff"
      opacity="0.8"
      id="circle24"
      transform="rotate(-90.071038)" />
   <circle
-     cx="-349.42496"
-     cy="323.75821"
+     cx="-301.4472"
+     cy="341.81754"
      r="6"
      fill="#ffffff"
      opacity="0.8"

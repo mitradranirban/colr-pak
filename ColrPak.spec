@@ -13,7 +13,7 @@ from fontra import __version__ as fontraVersion
 import fontTools.ttLib.tables.otTables
 import fontTools.ttLib.tables.otConverters
 
-COLR_PAK_VERSION = "0.2.6"
+COLR_PAK_VERSION = "0.2.7"
 
 
 def buildWindowsVersionResource():
@@ -166,7 +166,7 @@ block_cipher = None
 
 
 a = Analysis(
-    ["FontraPakMain.py"],
+    ["ColrPakMain.py"],
     pathex=[],
     binaries=binaries,
     datas=datas,

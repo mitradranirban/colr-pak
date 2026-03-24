@@ -85,7 +85,7 @@ source venv/bin/activate   # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
 # 4. Build the binary
-pyinstaller FontraPak.spec
+pyinstaller ColrPak.spec
 ```
 
 The output binary will be placed in `dist/Color Pak/` (macOS/Windows) or `dist/colorpak` (Linux).

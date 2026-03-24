@@ -6,6 +6,19 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.2.7] - 2026-03-24
+### Changed
+Rebrand: replace Fontra references with ColrPak
+
+- Replace fontra-icon.svg with color-pak-icon.svg in landing pages
+- Add favicon link tag to landing HTML files
+- Update document.title patterns in view-controller.js,
+  fontinfo.js and fontoverview.js to use ColrPak branding
+- Update Help menu links to ColrPak homepage, docs and changelog
+- Replace favicon.ico with ColrPak icon
+
+### Started
+- Github page activated - to show Readme as webpage
 ## [v0.2.6] - 2026-03-23
 ### Changed
 refactor: simplify CompileFontMakeAction to invoke fontmake directly from source path
