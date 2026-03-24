@@ -156,8 +156,8 @@ Color Pak extensions 🄯 [contributors of this fork](CONTRIBUTORS).
 ---
 
 ## Links
-
-- [Colr Pak documentation](https://fonts.atipra.in/colrpak.html)
+- [Changelog](CHANGELOG.md)
+- [Colr Pak Video documentation](https://fonts.atipra.in/colrpak.html)
 - [COLRv1 specification overview](https://simoncozens.github.io/colrv1-rocks/)
 - [Upstream Fontra Pak](https://github.com/fontra/fontra-pak)
 - [Upstream Fontra](https://github.com/fontra/fontra)
