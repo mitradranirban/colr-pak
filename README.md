@@ -14,7 +14,20 @@
   </a>
   <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-blue" />
   <img src="https://img.shields.io/badge/color-COLRv0%20%7C%20COLRv1-orange" />
+<a href="https://github.com/mitradranirban/colr-pak/wiki">
+  <img src="https://img.shields.io/badge/docs-wiki-blue" />
+</a>
 </p>
+<p align="center">
+  <strong>Documentation:</strong>
+  <a href="https://github.com/mitradranirban/colr-pak/wiki">Wiki Home</a> ·
+  <a href="https://github.com/mitradranirban/colr-pak/wiki/new">Start a New Project</a> ·
+  <a href="https://github.com/mitradranirban/colr-pak/wiki/palette">Color Palettes</a>
+</p>
+
+> [!NOTE]
+> ColrPak documentation is a work in progress.
+---
 
 ---
 
