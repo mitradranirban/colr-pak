@@ -41,7 +41,7 @@ jobs:
         pip install --force build/universal_wheels/*.whl
 
     - name: Build with PyInstaller
-      run: pyinstaller FontraPak.spec -y
+      run: pyinstaller ColrPak.spec -y
 
     - name: Package Linux (x86_64)
       if: matrix.os == 'ubuntu-latest'
