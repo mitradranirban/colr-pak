@@ -1,4 +1,4 @@
-# Color Pak
+# Colr Pak
 
 <p align="center">
   <img src="icon/colr-pak-icon.svg" alt="Color Pak Icon" width="512"/>
@@ -23,7 +23,8 @@
   <a href="https://github.com/mitradranirban/colr-pak/wiki">Wiki Home</a> ·
   <a href="https://github.com/mitradranirban/colr-pak/wiki/new">Start a New Project</a> ·
   <a href="https://github.com/mitradranirban/colr-pak/wiki/palette">Color Palettes</a> .
-  <a href="https://github.com/mitradranirban/colr-pak/wiki/v0layers">Color V0 layers</a>
+  <a href="https://github.com/mitradranirban/colr-pak/wiki/v0layers">Color V0 layers</a>.
+<a href="https://github.com/mitradranirban/colr-pak/wiki/v0VF">Color V0 Variable Font</a>.
 </p>
 
 > [!NOTE]
@@ -32,11 +33,12 @@
 
 ---
 
-## What is Color Pak?
+## What is Colr Pak?
 
-**Color Pak** is a cross-platform desktop application for designing and editing color fonts. It is a fork of [Fontra Pak](https://github.com/fontra/fontra-pak), extended with dedicated tooling for COLRv0 and COLRv1 color font authoring — including a visual paint graph editor, palette management, and gradient handles directly on the canvas.
+**Colr Pak** is a cross-platform desktop application for designing and editing color fonts. It is a fork of [Fontra Pak](https://github.com/fontra/fontra-pak), extended with dedicated tooling for COLRv0 and COLRv1 color font authoring — including a visual paint graph editor, palette management, and gradient handles directly on the canvas.
 
 Your fonts stay entirely on your computer and are never uploaded anywhere.
+
 ![colrpak screenshot](colrpakshot.png)
 ---
 
@@ -69,9 +71,10 @@ Your fonts stay entirely on your computer and are never uploaded anywhere.
 
 ## Installation
 
-Download the latest release for your platform from the [Releases page](https://github.com/mitradranirban/colr-pak/releases/latest):
+Download the latest release for your platform from the [Releases page](https://github.com/mitradranirban/colr-pak/releases/latest)
 
- Read [Installation instruction](INSTALLATION.md)
+ Read [Installation instruction](INSTALLATION.md) before installing
+
 No installation of Python or any other dependency is required — Color Pak ships as a self-contained binary.
 
 ---
