@@ -52,7 +52,7 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
-COLR_PAK_VERSION = "0.2.7"
+COLR_PAK_VERSION = "0.2.8"
 
 commonCSS = """
 border-radius: 20px;
@@ -63,36 +63,43 @@ padding: 16px;
 
 neutralCSS = (
     """
-background-color: rgba(255,255,255,128);
-border: 5px solid lightgray;
+background: linear-gradient(135deg, rgba(173, 216, 255, 0.8), rgba(221, 160, 221, 0.8));
+border: 5px solid #87CEEB;
 """
     + commonCSS
 )
 
 droppingCSS = (
     """
-background-color: rgba(255,255,255,64);
-border: 5px solid gray;
+background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(144, 238, 144, 0.4));
+border: 5px solid #32CD32;
 """
     + commonCSS
 )
 
 mainText = """
-<span style="font-size: 40px; color: blue;">Drop font files here</span>
-<br>
-<span style="color: red;">Font files are not uploaded
-but processed locally</span>
-
-<br>
-COLR Pak is an unofficial fork of Fontra font editor for COLR fonts
-<br>
-It reads and writes .ufo, .designspace for COLR V0 format fonts
-<br>
-and .fontra format for color v1 fonts. It has partial support for reading
-<br>
- and writing .glyphs and .glyphspackage files (without colr data).
-<br>
-Additionally, it can extract color layers and palletes from .ttf file
+<span style="font-size: 40px;
+             color: #4169E1;
+             font-weight: bold;
+             text-shadow: 2px 2px 4px rgba(135, 206, 235, 0.5);">
+Drop font files here
+</span>
+<br><br>
+<span style="color: #FF4500;
+             font-weight: bold;
+             font-size: 20px;">
+Font files are not uploaded but processed locally
+</span>
+<br><br>
+<span style="color: #00FFFF;
+             font-size: 16px;
+             line-height: 1.4;">
+COLR Pak is an unofficial fork of Fontra font editor for COLR fonts<br>
+It reads and writes .ufo, .designspace for COLR V0 format fonts<br>
+and .fontra format for color v1 fonts. It has partial support for reading<br>
+and writing .glyphs and .glyphspackage files (without colr data).<br>
+Additionally, it can extract color layers and palettes from .ttf file
+</span>
 """
 
 fileTypes = [

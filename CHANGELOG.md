@@ -6,6 +6,12 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.2.8] - 2026-03-26
+### fontra-color-support
+- updated missing translation strings
+- rebased to recent version of fontra
+### Changed
+- Change in css of main app to be abit more colorfull
 ## [v0.2.7] - 2026-03-24
 ### Changed
 Rebrand: replace Fontra references with ColrPak
