@@ -151,10 +151,10 @@ Contributions to the upstream project that are not color-specific should ideally
 
 ## License
 
-Color Pak inherits the GPL3 license of the Fontra project. See [LICENSE](LICENSE) for details.
+Color Pak inherits the GPL3 license of the Fontra project. See [LICENSE](LICENSE.txt) for details.
 
 Original Fontra © Google LLC, Just van Rossum.
-Color Pak extensions 🄯 [contributors of this fork](CONTRIBUTORS).
+Color Pak extensions 🄯 [contributors of this fork](CONTRIBUTORS.txt).
 
 ---
 
