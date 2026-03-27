@@ -26,6 +26,10 @@
   <a href="https://github.com/mitradranirban/colr-pak/wiki/v0layers">Color V0 layers</a> ·
 <a href="https://github.com/mitradranirban/colr-pak/wiki/v0VF">Color V0 Variable Font</a> ·
 </p>
+<p align="center">
+<strong>Troubleshooting:</strong>
+ <a href="https://github.com/mitradranirban/colr-pak/wiki/macOS">MacOS Installation</a> ·
+ <a href="https://github.com/mitradranirban/colr-pak/wiki/windows">Windows Installation</a>
 
 > [!NOTE]
 > ColrPak documentation is a work in progress.
