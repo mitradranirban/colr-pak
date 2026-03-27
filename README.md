@@ -29,7 +29,7 @@
 <p align="center">
 <strong>Troubleshooting:</strong>
  <a href="https://github.com/mitradranirban/colr-pak/wiki/macOS">MacOS Installation</a> ·
- <a href="https://github.com/mitradranirban/colr-pak/wiki/windows">Windows Installation</a>
+ <a href="https://github.com/mitradranirban/colr-pak/wiki/windows">Windows Installation</a></p>
 
 > [!NOTE]
 > ColrPak documentation is a work in progress.
