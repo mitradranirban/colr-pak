@@ -20,15 +20,14 @@
 </p>
 <p align="center">
   <strong>Documentation:</strong>
-  <a href="https://github.com/mitradranirban/colr-pak/wiki">Wiki Home</a> ·
-  <a href="https://github.com/mitradranirban/colr-pak/wiki/new">Start a New Project</a> ·
+  <a href="https://github.com/mitradranirban/colr-pak/wiki/new">New Project</a> ·
   <a href="https://github.com/mitradranirban/colr-pak/wiki/palette">Color Palettes</a> ·
-  <a href="https://github.com/mitradranirban/colr-pak/wiki/v0layers">Color V0 layers</a> ·
-<a href="https://github.com/mitradranirban/colr-pak/wiki/v0VF">Color V0 Variable Font</a> ·
+  <a href="https://github.com/mitradranirban/colr-pak/wiki/v0layers"> V0 layers</a> ·
+<a href="https://github.com/mitradranirban/colr-pak/wiki/v0VF">ColrV0 Variable Font</a> ·
 </p>
 <p align="center">
 <strong>Troubleshooting:</strong>
- <a href="https://github.com/mitradranirban/colr-pak/wiki/macOS">MacOS Installation</a> ·
+ <a href="https://github.com/mitradranirban/colr-pak/wiki/macOS.md">MacOS Installation</a> ·
  <a href="https://github.com/mitradranirban/colr-pak/wiki/windows">Windows Installation</a></p>
 
 > [!NOTE]
