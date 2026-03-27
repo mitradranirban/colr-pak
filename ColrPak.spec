@@ -13,7 +13,7 @@ from fontra import __version__ as fontraVersion
 import fontTools.ttLib.tables.otTables
 import fontTools.ttLib.tables.otConverters
 
-COLR_PAK_VERSION = "0.2.8"
+COLR_PAK_VERSION = "0.3.0"
 
 
 def buildWindowsVersionResource():

@@ -62,9 +62,11 @@ Your fonts stay entirely on your computer and are never uploaded anywhere.
 | `.ufo` | ✅ | ✅ |✅ | - |
 | `.designspace` | ✅ | ✅ |✅ | - |
 | `.rcjk` | ✅ | ✅ | - | - |
-| `.glyphs` / `.glyphspackage` | ✅ | ✅ (partial) | - | - |
-| `.ttf` / `.otf` | ✅ | ✅ (via compile) |  ✅ | ✅ |
-| `.woff` / `.woff2` | ✅ | — |- | - |
+| `.glyphs` / `.glyphspackage` | ✅ | ✅ (partial) | - | -
+| `.ttf` | ✅ | ✅   |  ✅ | ✅ |
+| `.otf` | ✅ | ✅   |  ✅ | - |
+| `.woff`| ✅ | — |- | - |
+| `.woff2` | ✅ |✅  |✅ | ✅ |
 | `.ttx` | ✅ | — | - | - |
 
 ---

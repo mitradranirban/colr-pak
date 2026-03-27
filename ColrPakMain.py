@@ -28,6 +28,7 @@ from fontra.core.classes import DiscreteFontAxis
 from fontra.core.server import FontraServer, findFreeTCPPort
 from fontra.core.urlfragment import dumpURLFragment
 from fontra.filesystem.projectmanager import FileSystemProjectManager
+from fontTools.ttLib.woff2 import compress as woff2Compress
 from PyQt6.QtCore import (
     QEvent,
     QObject,
@@ -52,7 +53,7 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
-COLR_PAK_VERSION = "0.2.8"
+COLR_PAK_VERSION = "0.3.0"
 
 commonCSS = """
 border-radius: 20px;
@@ -118,6 +119,7 @@ exportFileTypes = [
     # name, extension
     ("TrueType", "ttf"),
     ("OpenType", "otf"),
+    ("Webfont", "woff2"),
 ] + fileTypes
 
 exportFileTypesMapping = {
@@ -185,7 +187,7 @@ class FontraMainWidget(QMainWindow):
         button.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         button.clicked.connect(self.newFont)
 
-        buttonDocs = QPushButton("Documentation", self)
+        buttonDocs = QPushButton("&Documentation", self)
         buttonDocs.setToolTip("Open documentation website")
         buttonDocs.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         buttonDocs.clicked.connect(
@@ -350,7 +352,11 @@ class FontraMainWidget(QMainWindow):
     def doExportAs(self, sourcePath, destPath, fileExtension):
         logFilePath = tempfile.NamedTemporaryFile(delete=False).name
         sourceExt = sourcePath.suffix.lower()
-        isfontrattfotf = sourceExt == ".fontra" and fileExtension in ("ttf", "otf")
+        isfontrattfotf = sourceExt == ".fontra" and fileExtension in (
+            "ttf",
+            "otf",
+            "woff2",
+        )
 
         if isfontrattfotf:
             exportProcess = multiprocessing.Process(
@@ -567,7 +573,12 @@ def exportFontToPathCompile(sourcePath, destPath, logFilePath):
 async def exportFontToPathAsync(sourcePath, destPath, fileExtension):
     sourcePath = pathlib.Path(sourcePath)
     destPath = pathlib.Path(destPath)
-
+    if fileExtension == "woff2":
+        with tempfile.TemporaryDirectory() as tmpDir:
+            tmpTtfPath = pathlib.Path(tmpDir) / (destPath.stem + ".ttf")
+            await exportFontToPathAsync(sourcePath, tmpTtfPath, "ttf")
+            woff2Compress(str(tmpTtfPath), str(destPath))
+        return
     sourceBackend = getFileSystemBackend(sourcePath)
 
     if fileExtension in {"ttf", "otf"}:
