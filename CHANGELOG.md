@@ -6,6 +6,15 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.3.1] - 2026-03-29
+### fontra-compile
+- fix: static COLRv1 font compilation
+
+- Guard varstorebuilder init before build_colr() to avoid
+  AttributeError on None when no variation data is registered
+- Skip gvar for static fonts by guarding setupGvar/setupGVAR
+  with self.globalAxes check
+
 ## [v0.3.0] - 2026-03-27
 ### Added
 - Direct Webfont (`.woff2`) export for both v0 and v1 color fonts
