@@ -129,22 +129,15 @@ jobs:
       # ── WiX MSI ───────────────────────────────────────────────────────────
       - name: Install WiX v4
         shell: pwsh
-        run: dotnet tool install --global wix
+        run: dotnet tool install --global wix --version 6.0.2
 
       - name: Add WiX UI extension
         shell: pwsh
-        run: wix extension add WixToolset.UI.wixext
+        run: wix extension add --global WixToolset.UI.wixext/6.0.2
 
       - name: Compile WiX MSI
         shell: pwsh
         run: wix build packaging\windows\Product.wxs -d "Version=${{ env.VERSION_NUMERIC }}" -ext WixToolset.UI.wixext -o "$env:GITHUB_WORKSPACE\dist\ColrPak-${{ env.VERSION }}.msi"
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: colrpak-windows-latest
-          path: |
-            dist/ColrPak-Setup-${{ env.VERSION }}.exe
-            dist/ColrPak-${{ env.VERSION }}.msi
 
   # ── GitHub Release ────────────────────────────────────────────────────────
   release:
