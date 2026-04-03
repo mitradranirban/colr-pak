@@ -3,28 +3,30 @@
 Unicode true
 SetCompressor /SOLID lzma
 
-!define APP_NAME "Color Pak"
+!define APP_NAME "Colr Pak"
 !define APP_EXE "Colr Pak.exe"
-!define COMPANY_NAME "Color Pak Contributors"
-!define PUBLISHER "Color Pak Contributors"
+!define COMPANY_NAME "Colr Pak Contributors"
+!define PUBLISHER "Colr Pak Contributors"
 !ifndef VERSION
   !define VERSION "dev"
 !endif
-!define WEBSITE "https://github.com/mitradranirban/colr-pak"
+!define WEBSITE "https://mitradranirban.github.io/colr-pak"
 
 !include "MUI2.nsh"
 
 Name "${APP_NAME}"
-OutFile "dist\ColorPak-Setup-${VERSION}.exe"
-InstallDir "$PROGRAMFILES64\Color Pak"
+OutFile "${__FILEDIR__}\..\..\dist\ColrPak-Setup-${VERSION}.exe"
+InstallDir "$PROGRAMFILES64\Colr Pak"
 InstallDirRegKey HKLM "Software\${APP_NAME}" "Install_Dir"
 RequestExecutionLevel admin
 
 !define MUI_ABORTWARNING
-!define MUI_ICON "icon\colr-pak.ico"
-!define MUI_UNICON "icon\colr-pak.ico"
+!define MUI_ICON "${__FILEDIR__}\..\..\icon\ColrIcon.ico"
+!define MUI_UNICON "${__FILEDIR__}\..\..\icon\ColrIcon.ico"
+!define MUI_LICENSEPAGE_TEXT_TOP "Please review the license before installing Color Pak."
 
 !insertmacro MUI_PAGE_WELCOME
+!insertmacro MUI_PAGE_LICENSE "${__FILEDIR__}\..\..\LICENSE.txt"
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !define MUI_FINISHPAGE_RUN "$INSTDIR\${APP_EXE}"
@@ -36,10 +38,7 @@ RequestExecutionLevel admin
 
 Section "Install"
   SetOutPath "$INSTDIR"
-  File "dist\Colr Pak.exe"
-  ; Optional:
-  ; File "LICENSE"
-  ; File "icon\colr-pak.ico"
+  File "${__FILEDIR__}\..\..\dist\Colr Pak.exe"
 
   WriteRegStr HKLM "Software\${APP_NAME}" "Install_Dir" "$INSTDIR"
   WriteUninstaller "$INSTDIR\Uninstall.exe"

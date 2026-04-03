@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
 <Product
     Id="*"
     Name="Colr Pak"
@@ -12,7 +12,7 @@
     <MajorUpgrade DowngradeErrorMessage="A newer version of Colr Pak is already installed." />
     <MediaTemplate EmbedCab="yes" />
 
-    <Icon Id="AppIcon" SourceFile="icon\colr-pak.ico" />
+    <Icon Id="AppIcon" SourceFile="..\..\icon\ColrIcon.ico" />
     <Property Id="ARPPRODUCTICON" Value="AppIcon" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
@@ -27,12 +27,12 @@
 
     <DirectoryRef Id="INSTALLFOLDER">
       <Component Id="MainExecutable" Guid="021986BC-2EC4-4CAA-BF6B-353E86FE6A20" Win64="yes">
-        <File Id="ColrPakExe" Source="dist\Colr Pak.exe" KeyPath="yes" />
+        <File Id="ColrPakExe" Source="..\..\dist\Colr Pak.exe" KeyPath="yes" />
       </Component>
     </DirectoryRef>
 
     <DirectoryRef Id="ProgramMenuDir">
-      <Component Id="StartMenuShortcut" Guid="78B61250-1C2F-4185-BD0F-D4DBC93A78EE" Win64="yes">
+      <Component Id="StartMenuShortcut" Guid="78B61250-1C2F-4185-BD0F-D4DBC93A78EE">
         <Shortcut Id="ApplicationStartMenuShortcut"
                   Name="Colr Pak"
                   Description="Colr Pak font editor"
