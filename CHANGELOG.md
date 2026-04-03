@@ -6,6 +6,10 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.3.2] - 2026-04-02
+## Packaging
+- Add Setup Programme and msi installer for Microsoft Windows
+
 ## [v0.3.1] - 2026-03-29
 ### fontra-compile
 - fix: static COLRv1 font compilation
