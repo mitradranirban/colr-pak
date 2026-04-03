@@ -84,9 +84,9 @@ jobs:
         if: matrix.os == 'windows-latest'
         with:
           name: colrpak-windows-exe
-          path: staging/Colr Pak.exe
+          path: "staging/Colr Pak.exe"
 
-  # ── Windows installers (NSIS + WiX), runs after windows build ────────────
+  # ── Windows NSIS installer, runs after windows build ─────────────────────
   windows-installer:
     needs: build
     runs-on: windows-latest
@@ -97,10 +97,8 @@ jobs:
       - name: Extract version from tag
         shell: pwsh
         run: |
-          $versionFull    = "${{ github.ref_name }}" -replace '^v', ''
-          $versionNumeric = $versionFull -replace '[-+].*$', ''
-          echo "VERSION=$versionFull"           >> $env:GITHUB_ENV
-          echo "VERSION_NUMERIC=$versionNumeric" >> $env:GITHUB_ENV
+          $versionFull = "${{ github.ref_name }}" -replace '^v', ''
+          echo "VERSION=$versionFull" >> $env:GITHUB_ENV
 
       - name: Download Windows exe
         uses: actions/download-artifact@v4
@@ -112,7 +110,6 @@ jobs:
         shell: pwsh
         run: Get-Item "dist\Colr Pak.exe"
 
-      # ── NSIS ──────────────────────────────────────────────────────────────
       - name: Install NSIS
         uses: repolevedavaj/install-nsis@v1.0.3
         with:
@@ -122,22 +119,12 @@ jobs:
         uses: joncloud/makensis-action@v4.1
         with:
           script-file: packaging/windows/colr-pak-installer.nsi
-          arguments: >
-            /V3
-            /DVERSION=${{ env.VERSION }}
+          arguments: "/V3 /DVERSION=${{ env.VERSION }}"
 
-      # ── WiX MSI ───────────────────────────────────────────────────────────
-      - name: Install WiX v4
-        shell: pwsh
-        run: dotnet tool install --global wix --version 6.0.2
-
-      - name: Add WiX UI extension
-        shell: pwsh
-        run: wix extension add --global WixToolset.UI.wixext/6.0.2
-
-      - name: Compile WiX MSI
-        shell: pwsh
-        run: wix build packaging\windows\Product.wxs -d "Version=${{ env.VERSION_NUMERIC }}" -ext WixToolset.UI.wixext -o "$env:GITHUB_WORKSPACE\dist\ColrPak-${{ env.VERSION }}.msi"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: colrpak-windows-latest
+          path: dist/ColrPak-Setup-${{ env.VERSION }}.exe
 
   # ── GitHub Release ────────────────────────────────────────────────────────
   release:
@@ -161,5 +148,4 @@ jobs:
             dist/colrpak-ubuntu-24.04-arm/colrpak-linux-arm64.tar.gz
             dist/colrpak-macos-latest/colrpak-macos.zip
             dist/colrpak-windows-latest/ColrPak-Setup-*.exe
-            dist/colrpak-windows-latest/ColrPak-*.msi
           generate_release_notes: true
