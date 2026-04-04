@@ -23,7 +23,7 @@
   <a href="https://github.com/mitradranirban/colr-pak/wiki/new">New Project</a> ·
   <a href="https://github.com/mitradranirban/colr-pak/wiki/palette">Color Palettes</a> ·
   <a href="https://github.com/mitradranirban/colr-pak/wiki/v0layers"> V0 layers</a> ·
-<a href="https://github.com/mitradranirban/colr-pak/wiki/v0VF">ColrV0 Variable Font</a> ·
+<a href="https://github.com/mitradranirban/colr-pak/wiki/v0VF">ColrV0 Variable Font</a> · <a href="https://github.com/mitradranirban/colr-pak/wiki/v1paint">ColrV1 Visual Paint</a>
 </p>
 <p align="center">
 <strong>Troubleshooting:</strong>
