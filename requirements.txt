@@ -1,4 +1,4 @@
-git+https://github.com/mitradranirban/fontra.git@fontra-color-support
+git+https://github.com/mitradranirban/fontra.git@release/0.4.0
 git+https://github.com/mitradranirban/fontra-compile.git@fontra-color-support
 git+https://github.com/fontra/fontra-rcjk.git
 git+https://github.com/fontra/fontra-glyphs.git
