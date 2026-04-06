@@ -6,6 +6,103 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.4.0] - 2026-04-07
+### Colrpak Main
+#### Fixed
+**fix(export): block OTF export for .fontra sources with user-facing error**
+
+COLRv1 fonts require TrueType (glyf) outlines — CFF2 (OTF) is incompatible
+with COLR/CPAL tables per the OpenType spec. .fontra is Colr Pak's native
+COLRv1 format and must always compile to TTF or WOFF2.
+
+Previously, selecting OTF as the export format for a .fontra source would
+silently pass the request to fontra_compile, which crashed deep in
+fontTools with AssertionError: assert not self.isTTF.
+
+- Changes in doExportAs():
+  - Added early return with QMessageBox.warning() when sourceExt == ".fontra"
+    and fileExtension == "otf", informing the user to use TTF or WOFF2
+  - Removed "otf" from the isfontrattfotf tuple — .fontra → compile path
+    now only triggers for "ttf" and "woff2"
+
+Note: .ufo and .designspace sources exporting to OTF are unaffected —
+COLRv0 with CFF outlines is valid per spec and fontmake handles it correctly.
+This guard is intentionally scoped to .fontra sources only.
+
+#### Added
+
+**Both nsis setup exe and msi installer for Windows Platfomt are now available**
+
+### fontra-compile (color-support)
+#### Fixed
+**fix(builder): force TTF mode for .fontra sources to prevent CFF2/COLR collision**
+
+COLRv1 fonts require TrueType (glyf) outlines — the OpenType spec does not
+permit CFF2 in a font with COLR/CPAL tables. When a .fontra source contained
+cubic curves, buildCFF2 was being set to True by the caller, causing:
+
+  1. FontBuilder to initialize with isTTF=False
+  2. The COLRv1 paint path to run (correctly detecting color data)
+  3. setupCFF2() to be called immediately after, triggering:
+       assert not self.isTTF  →  AssertionError (fontTools/fontBuilder.py:576)
+
+Two guards added in builder.py:
+
+build() — early guard before prepareGlyphs():
+  - Resets buildCFF2=False if colorV1RawCache is non-empty (COLRv1 data found)
+  - Also resets buildCFF2=False if the backend path ends in .fontra, catching
+    fonts where base glyphs have cubic curves but no colorv1 customData yet
+    (e.g. a plain .notdef drawn with cubic curves makes colorV1RawCache empty,
+    bypassing the cache-only check and leaving buildCFF2=True)
+  - Uses getattr(reader, "path") / getattr(reader, "_path") consistent with
+    the existing pattern in getCustomData() and getFontData()
+
+buildFont() — final guard before FontBuilder is instantiated:
+  - Checks glyphInfos[*].hasColorV1, which is the fully-resolved authoritative
+    signal populated after prepareGlyphs() completes
+  - Ensures isTTF=True is passed to FontBuilder regardless of how build() was
+    entered (CLI, direct instantiation, future code paths)
+
+cu2qu handles cubic→quadratic conversion transparently during glyf table
+construction, so forcing TTF mode does not lose any outline fidelity.
+
+Reproducer: open any .fontra font with cubic outlines → Export As → TTF
+Previously: AssertionError crash in fontra_compile.__main__.main()
+Now: compiles cleanly with correct glyf + COLR/CPAL tables
+
+### fontra-color-support
+#### Fixed
+**fix(colrv1-renderer): correct PaintComposite color rendering**
+
+    COLRv1 glyphs with PaintComposite nodes rendered with incorrect colors
+    due to backdrop paint bleeding directly onto the main canvas context.
+
+    Root cause: Canvas 2D globalCompositeOperation composites against
+    existing canvas content, not against a local backdrop. PaintComposite
+    requires isolated rendering per the COLRv1 spec.
+
+    Fix: render backdrop and source into OffscreenCanvas buffers, apply
+    composite mode between them, blit result to main canvas.
+
+    fixes issue #2
+
+    Tested with: knobs, ticket, boarding-pass emoji glyphs.
+
+#### Added
+ **feat(colrv1): implement async clip glyph rendering for COLRv1 canvas**
+
+    - Read paint graph from customData["colorv1"] (new backend format)
+    - Resolve self-referencing PaintGlyph clips from positionedGlyph directly
+    - Use getGlyphInstance to fetch external clip glyphs asynchronously
+    - Add module-level _resolvedPathCache to persist paths across render frames
+    - Add _pendingGlyphs guard to prevent duplicate fetch requests
+    - Move COLRv1 pre-fetch to positionedLines listener in scene-controller
+    - Use loadGlyphs for bulk pre-fetching referenced component glyphs
+    - Canvas now renders COLRv1 glyphs with correct colors and clipping
+
+    Clip glyph transform/positioning and axis-aware instantiation are
+    still to be addressed in a future release.
+
 ## [v0.3.2] - 2026-04-02
 ## Packaging
 - Add Setup Programme and msi installer for Microsoft Windows

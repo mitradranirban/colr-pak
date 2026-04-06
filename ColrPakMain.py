@@ -53,7 +53,7 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
-COLR_PAK_VERSION = "0.3.2"
+COLR_PAK_VERSION = "0.4.0"
 
 commonCSS = """
 border-radius: 20px;
@@ -92,22 +92,22 @@ Drop font files here
 Font files are not uploaded but processed locally
 </span>
 <br><br>
-<span style="color: #00FFFF;
+<span style="color: #0097A7;
              font-size: 16px;
              line-height: 1.4;">
 COLR Pak is an unofficial fork of Fontra font editor for COLR fonts<br>
 It reads and writes .ufo, .designspace for COLR V0 format fonts<br>
 and .fontra format for color v1 fonts. It has partial support for reading<br>
 and writing .glyphs and .glyphspackage files (without colr data).<br>
-Additionally, it can extract color layers and palettes from .ttf file
+Additionally, it can extract color layers and palettes from .ttf file.<br>
+Colr fonts can be exported as .otf (v0 only), .ttf and .woff2.
 </span>
 """
 
 fileTypes = [
     # name, extension
-    ("Designspace", "designspace"),
     ("Fontra", "fontra"),
-    ("RoboCJK", "rcjk"),
+    ("Designspace", "designspace"),
     ("Unified Font Object", "ufo"),
 ]
 
@@ -352,9 +352,22 @@ class FontraMainWidget(QMainWindow):
     def doExportAs(self, sourcePath, destPath, fileExtension):
         logFilePath = tempfile.NamedTemporaryFile(delete=False).name
         sourceExt = sourcePath.suffix.lower()
+
+        # .fontra sources cannot export to OTF — COLRv1 requires TTF (glyf) outlines.
+        # CFF2 is incompatible with COLR/CPAL tables per the OpenType spec.
+        if sourceExt == ".fontra" and fileExtension == "otf":
+            QMessageBox.warning(
+                self,
+                "Export Not Supported",
+                "Cannot export .fontra sources as OTF.\n\n"
+                "COLRv1 fonts require TrueType (glyf) outlines, which are "
+                "incompatible with the CFF2 format used by OTF.\n\n"
+                "Please export as TTF or WOFF2 instead.",
+            )
+            return
+
         isfontrattfotf = sourceExt == ".fontra" and fileExtension in (
             "ttf",
-            "otf",
             "woff2",
         )
 
