@@ -2,8 +2,6 @@
 import sys
 from importlib.metadata import PackageNotFoundError
 from PyInstaller.utils.hooks import collect_all, copy_metadata
-from fontra import __version__ as fontraVersion
-
 # ---------------------------------------------------------------------------
 # Fix: Pre-import fontTools circular dependency chain before PyInstaller
 # analysis begins. otConverters depends on otTables being initialized first;
@@ -13,7 +11,17 @@ from fontra import __version__ as fontraVersion
 import fontTools.ttLib.tables.otTables
 import fontTools.ttLib.tables.otConverters
 
+# Update before each release
 COLR_PAK_VERSION = "0.4.0"
+# UPDATE whenever merging from upstream fontra (see: https://github.com/fontra/fontra/releases)
+FONTRA_UPSTREAM_VERSION = "2026.4.0"
+
+
+def _ver_tuple(version_str):
+    """Parse a version string into a 4-integer tuple for Windows VERSIONINFO."""
+    parts = version_str.split(".", maxsplit=3)
+    y, m, patch = [int(v) for v in parts[:3]]
+    return (y, m, patch, 0)
 
 
 def buildWindowsVersionResource():
@@ -27,13 +35,10 @@ def buildWindowsVersionResource():
         VarStruct,
     )
 
-    y, m, patch, *extra = fontraVersion.split(".", maxsplit=3)
-    y, m, patch = [int(v) for v in (y, m, patch)]
-
     return VSVersionInfo(
         ffi=FixedFileInfo(
-            filevers=(y, m, patch, 0),
-            prodvers=(y, m, patch, 0),
+            filevers=_ver_tuple(FONTRA_UPSTREAM_VERSION),  # engine/runtime version
+            prodvers=_ver_tuple(COLR_PAK_VERSION),         # your product release version
             mask=0x3F,
             flags=0x0,
             OS=0x4,
@@ -47,12 +52,12 @@ def buildWindowsVersionResource():
                     StringTable(
                         "040904B0",
                         [
-                            StringStruct("CompanyName", "Fontra.xyz"),
+                            StringStruct("CompanyName", "Atipra.in"),
                             StringStruct("FileDescription", "Colr Pak"),
-                            StringStruct("FileVersion", fontraVersion),
+                            StringStruct("FileVersion", FONTRA_UPSTREAM_VERSION),
                             StringStruct("InternalName", "Colr Pak"),
                             StringStruct(
-                                "LegalCopyright", "© Google LLC, Just van Rossum"
+                                "LegalCopyright", "© Google LLC, Just van Rossum, ColrPak project"
                             ),
                             StringStruct("OriginalFilename", "Colr Pak.exe"),
                             StringStruct("ProductName", "Colr Pak"),
@@ -64,7 +69,6 @@ def buildWindowsVersionResource():
             VarFileInfo([VarStruct("Translation", [1033, 1200])]),
         ],
     )
-
 
 datas = []
 binaries = []
@@ -215,8 +219,8 @@ if sys.platform == "darwin":
         coll,
         name="Colr Pak.app",
         icon="icon/ColrIcon.icns",
-        bundle_identifier="xyz.fontra.colr-pak",
-        version="0.1.0",
+        bundle_identifier="in.atipra.colr-pak",
+        version="COLR_PAK_VERSION",
         info_plist={
             "CFBundleDocumentTypes": [
                 dict(
@@ -231,7 +235,6 @@ if sys.platform == "darwin":
                         "glyphs",
                         "glyphspackage",
                         "fontra",
-                        "rcjk",
                     ],
                     CFBundleTypeRole="Editor",
                 ),

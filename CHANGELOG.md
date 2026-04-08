@@ -31,7 +31,10 @@ This guard is intentionally scoped to .fontra sources only.
 
 #### Added
 
-**Both nsis setup exe and msi installer for Windows Platfomt are now available**
+Both **nsis setup exe** and **msi installer** for Windows Platform are now available
+
+#### Changed
+Modified **Version scheme** and **organisaion** in Pyinstaller Spec to avoid confusion with Upstream fontra
 
 ### fontra-compile (color-support)
 #### Fixed
@@ -69,6 +72,9 @@ construction, so forcing TTF mode does not lose any outline fidelity.
 Reproducer: open any .fontra font with cubic outlines → Export As → TTF
 Previously: AssertionError crash in fontra_compile.__main__.main()
 Now: compiles cleanly with correct glyf + COLR/CPAL tables
+
+**fix(colrv1): correct PaintSweepGradient angle units in dataToPaint** — scale startAngle/endAngle by 360.0 to convert Fontra turn fractions (0–1) to degrees
+expected by paintcompiler. Regression introduced when the same fix was applied to the mergenode variation path in v0.2.4 but missed the static dataToPaint path.
 
 ### fontra-color-support
 #### Fixed

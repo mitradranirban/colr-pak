@@ -20,7 +20,6 @@ from urllib.parse import quote
 from urllib.request import urlopen
 
 import psutil
-from fontra import __version__ as fontraVersion
 from fontra.backends import getFileSystemBackend, newFileSystemBackend
 from fontra.backends.copy import copyFont
 from fontra.backends.populate import populateBackend
@@ -53,7 +52,10 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
+# Update before each release
 COLR_PAK_VERSION = "0.4.0"
+# UPDATE whenever merge from upstream fontra
+FONTRA_UPSTREAM_VERSION = "2026.4.0"
 
 commonCSS = """
 border-radius: 20px;
@@ -131,7 +133,21 @@ exportExtensionMapping = {v: k for k, v in exportFileTypesMapping.items()}
 latestReleasePageURL = "https://github.com/mitradranirban/colr-pak/releases/latest"
 
 
-applicationSettings = QSettings("xyz.fontra", "ColrPak")
+def migrateSettings():
+    old = QSettings("xyz.fontra", "ColrPak")
+    new = QSettings("in.atipra", "ColrPak")
+
+    # Only migrate if old settings exist and new ones don't
+    if old.allKeys() and not new.allKeys():
+        for key in old.allKeys():
+            new.setValue(key, old.value(key))
+        old.clear()
+
+
+migrateSettings()
+
+
+applicationSettings = QSettings("in.atipra", "ColrPak")
 
 
 class FontraApplication(QApplication):
@@ -217,7 +233,9 @@ class FontraMainWidget(QMainWindow):
         layout.addWidget(self.sampleTextBox, 3, 0, 1, 2)
 
         layout.addWidget(
-            QLabel(f"Colr Pak {COLR_PAK_VERSION} (based on fontra {fontraVersion})"),
+            QLabel(
+                f"Colr Pak {COLR_PAK_VERSION} (based on fontra {FONTRA_UPSTREAM_VERSION})"
+            ),
             4,
             0,
         )
@@ -441,14 +459,14 @@ class FontraMainWidget(QMainWindow):
         QTimer.singleShot(msDelay, lambda: callInNewThread(self._checkForUpdate))
 
     def _checkForUpdate(self):
-        if "dev" in fontraVersion:
+        if "dev" in COLR_PAK_VERSION:
             return
 
         print(f"Checking for update on {datetime.now()}")
 
         latestVersion, downloadURL = fetchLatestReleaseInfo()
 
-        if downloadURL is not None and latestVersion != fontraVersion:
+        if downloadURL is not None and latestVersion != COLR_PAK_VERSION:
             callInMainThread(
                 self.downloadButton.setText, "‼️ A new version is available ‼️"
             )
