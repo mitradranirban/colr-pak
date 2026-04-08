@@ -15,18 +15,18 @@ SetCompressor /SOLID lzma
 !include "MUI2.nsh"
 
 Name "${APP_NAME}"
-OutFile "${__FILEDIR__}\..\..\dist\ColrPak-Setup-${VERSION}.exe"
+OutFile "${__FILEDIR__}\..\dist\ColrPak-Setup-${VERSION}.exe"
 InstallDir "$PROGRAMFILES64\Colr Pak"
 InstallDirRegKey HKLM "Software\${APP_NAME}" "Install_Dir"
 RequestExecutionLevel admin
 
 !define MUI_ABORTWARNING
-!define MUI_ICON "${__FILEDIR__}\..\..\icon\ColrIcon.ico"
-!define MUI_UNICON "${__FILEDIR__}\..\..\icon\ColrIcon.ico"
+!define MUI_ICON "${__FILEDIR__}\..\icon\ColrIcon.ico"
+!define MUI_UNICON "${__FILEDIR__}\..\icon\ColrIcon.ico"
 !define MUI_LICENSEPAGE_TEXT_TOP "Please review the license before installing Color Pak."
 
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE "${__FILEDIR__}\..\..\LICENSE.txt"
+!insertmacro MUI_PAGE_LICENSE "${__FILEDIR__}\..\LICENSE.txt"
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !define MUI_FINISHPAGE_RUN "$INSTDIR\${APP_EXE}"
@@ -38,7 +38,7 @@ RequestExecutionLevel admin
 
 Section "Install"
   SetOutPath "$INSTDIR"
-  File "${__FILEDIR__}\..\..\dist\Colr Pak.exe"
+  File "${__FILEDIR__}\..\dist\Colr Pak.exe"
 
   WriteRegStr HKLM "Software\${APP_NAME}" "Install_Dir" "$INSTDIR"
   WriteUninstaller "$INSTDIR\Uninstall.exe"
