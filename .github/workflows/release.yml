@@ -194,4 +194,5 @@ jobs:
             dist/colrpak-macos-latest/colrpak-macos.zip
             dist/colrpak-windows-nsis/ColrPak-Setup-*.exe
             dist/colrpak-windows-msi/ColrPak-Windows-*.msi
+            dist/colrpak-windows-exe/*.exe
           generate_release_notes: true
