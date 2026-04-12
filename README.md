@@ -74,9 +74,14 @@ Your fonts stay entirely on your computer and are never uploaded anywhere.
 
 ---
 
-## Installation
+## Download
 
-Download the latest release for your platform from the [Releases page](https://github.com/mitradranirban/colr-pak/releases/latest)
+|**Linux**| |**Linux**| |**Microsoft Windows**|  |**Mac Os**|
+|---|---|---|---|---|---|---|
+| (x86_64)| |(arm64) | | (10 and 11)||(Apple Silicon M1/M2/M3/M4 and Intel)|
+|[Readymade app{`.tgz`}](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.0/colrpak-linux.tar.gz)| |[Readymade app{`.tgz`}](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.0/colrpak-linux-arm64.tar.gz)| |[Portable App](https://github.com/mitradranirban/colr-pak/releases/latest/Colr Pak.exe)| |[App, zipped](https://github.com/mitradranirban/colr-pak/releases/download/latest/colrpak-macos.zip)|
+|[snap](https://snapcraft.io/colrpak)| |[snap](https://snapcraft.io/colrpak)| |[Setup installer](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.0/ColrPak-Setup-0.4.0.exe)| |[Homebrew](https://github.com/mitradranirban/homebrew-tap)|
+|[Flatpak](https://github.com/mitradranirban/colrpak-flatpak)| |[Flatpak](https://github.com/mitradranirban/colrpak-flatpak)| |[msi installer](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.0/ColrPak-Windows-0.4.0.msi)|| - |
 
  Read [Installation instruction](INSTALLATION.md) before installing
 

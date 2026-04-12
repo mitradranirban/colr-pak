@@ -194,4 +194,25 @@ jobs:
             dist/colrpak-macos-latest/colrpak-macos.zip
             dist/colrpak-windows-nsis/ColrPak-Setup-*.exe
             dist/colrpak-windows-msi/ColrPak-Windows-*.msi
+            dist/colrpak-windows-exe/*.exe
           generate_release_notes: true
+
+      - name: Trigger Downstream Updates with Tag
+        if: steps.create_release.conclusion == 'success' && github.ref_type == 'tag'
+        run: |
+          BUILD_TAG="${{ github.ref_name }}"
+
+          for repo in "mitradranirban/colrpak-flatpak" "mitradranirban/homebrew-tap"; do
+            echo "Triggering $repo with tag $BUILD_TAG..."
+            curl -X POST \
+              -H "Accept: application/vnd.github.v3+json" \
+              -H "Authorization: Bearer ${{ secrets.HOMEBREW_PAT }}" \
+              https://api.github.com/repos/$repo/dispatches \
+              -d "{
+                \"event_type\": \"update-manifest\",
+                \"client_payload\": {
+                  \"version\": \"$BUILD_TAG\",
+                  \"zip_url\": \"https://github.com/mitradranirban/colr-pak/releases/download/$BUILD_TAG/colrpak-macos.zip\"
+                }
+              }"
+          done

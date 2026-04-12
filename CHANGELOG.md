@@ -6,6 +6,15 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.4.1] - 2026-04-12
+### fontra-color-support
+- updated to upstream branch 2026.4.1
+
+### Deployment:
+
+- Automated Generation of Flatpak and Homebrew script on release
+- Add back portable windows executable
+
 ## [v0.4.0] - 2026-04-07
 ### Colrpak Main
 #### Fixed
