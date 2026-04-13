@@ -6,6 +6,30 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.4.2] - 2026-04-13
+### ColrPak
+- Remove fetch Latest Release Info in Linux platform as that is crashing in Flatpak environment.
+
+### fontra-color-support
+fix(colrv1): restore layer-nested data structure for compiler and tool compatibility
+
+In commit eae66e7, the COLRv1 data path was simplified to write to the
+root glyph's customData. This caused a structural mismatch:
+1. The Paint Tool failed to render/manipulate handles because it targets
+   the layer instance's customData.
+2. The Fontra compiler failed to associate color paints with their
+   respective geometric contours.
+
+This change reverts the "simplification" and enforces the previous standard (nested under layers[id].glyph.customData).
+
+Changes:
+- panel-color-layers.js: Update _writeV1Paint to target layer-specific glyph.
+- panel-color-layers.js: Fix _convertV0toV1 to nest paint graph within layers.
+- panel-color-layers.js: Adjust _addLayer to maintain COLRv1 graph alignment.
+- edit-tools-paint.js: Ensure getV1Paint/writeV1Paint prioritize layer-nested data.
+- Cleanup: Added logic to delete accidental root-level 'colorv1' keys.
+
+Fixes: Invisible paint handles and compiler rendering errors.
 ## [v0.4.1] - 2026-04-12
 ### fontra-color-support
 - updated to upstream branch 2026.4.1

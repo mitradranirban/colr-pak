@@ -53,7 +53,7 @@ from PyQt6.QtWidgets import (
 )
 
 # Update before each release
-COLR_PAK_VERSION = "0.4.1"
+COLR_PAK_VERSION = "0.4.2"
 # UPDATE whenever merge from upstream fontra
 FONTRA_UPSTREAM_VERSION = "2026.4.1"
 
@@ -509,8 +509,6 @@ def _fetchLatestReleaseInfo() -> tuple[str, str | None]:
             assetNamePart = "MacOS"
         case "win32":
             assetNamePart = "Windows"
-        case "linux":
-            assetNamePart = "Linux"
 
     if assetNamePart is None:
         return latestVersion, None
