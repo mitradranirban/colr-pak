@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- windows/Product.wxs -->
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
   <Package
       Name="Colr Pak"
@@ -11,48 +10,43 @@
     <MajorUpgrade DowngradeErrorMessage="A newer version of Colr Pak is already installed." />
     <MediaTemplate EmbedCab="yes" />
 
+    <Property Id="INSTALLDESKTOPSHORTCUT" Value="1" Secure="yes" />
+
     <Icon Id="AppIcon" SourceFile="..\icon\ColrIcon.ico" />
     <Property Id="ARPPRODUCTICON" Value="AppIcon" />
-    <Property Id="ARPHELPLINK" Value="https://github.com/mitradranirban/colr-pak" />
 
     <StandardDirectory Id="ProgramFiles64Folder">
       <Directory Id="INSTALLFOLDER" Name="Colr Pak">
         <Component Id="MainExecutable" Guid="D14A72BC-83E5-4C29-A601-F0B7224D8E11">
-          <File Id="ColrPakExe"
-                Source="..\dist\Colr Pak.exe"
-                KeyPath="yes" />
+          <File Id="ColrPakExe" Source="..\dist\Colr Pak.exe" KeyPath="yes" />
         </Component>
       </Directory>
     </StandardDirectory>
 
     <StandardDirectory Id="ProgramMenuFolder">
       <Directory Id="AppMenuFolder" Name="Colr Pak">
-        <Component Id="StartMenuShortcut" Guid="6E295F44-C3A1-4B8E-9D70-37FF5A0C2C82">
+        <Component Id="StartMenuShortcutComponent" Guid="6E295F44-C3A1-4B8E-9D70-37FF5A0C2C82">
           <Shortcut Id="StartMenuShortcut"
                     Name="Colr Pak"
-                    Description="Colr Pak color font editor"
                     Target="[INSTALLFOLDER]Colr Pak.exe"
                     WorkingDirectory="INSTALLFOLDER" />
           <RemoveFolder Id="AppMenuFolderRemove" On="uninstall" />
-          <RegistryValue Root="HKLM"
-                         Key="Software\Colr Pak"
-                         Name="StartMenuShortcut"
-                         Type="integer"
-                         Value="1"
-                         KeyPath="yes" />
+          <RegistryValue Root="HKCU" Key="Software\ColrPak" Name="StartMenu" Type="integer" Value="1" KeyPath="yes" />
         </Component>
       </Directory>
     </StandardDirectory>
 
     <StandardDirectory Id="DesktopFolder">
-      <Component Id="DesktopShortcut" Guid="B82D3A10-F4E7-4D56-C291-09A6B5F3E048">
+      <Component Id="DesktopShortcutComponent" Guid="B82D3A10-F4E7-4D56-C291-09A6B5F3E048">
+        <Condition>INSTALLDESKTOPSHORTCUT = "1"</Condition>
+
         <Shortcut Id="DesktopShortcut"
                   Name="Colr Pak"
-                  Description="Colr Pak color font editor"
                   Target="[INSTALLFOLDER]Colr Pak.exe"
                   WorkingDirectory="INSTALLFOLDER" />
-        <RegistryValue Root="HKLM"
-                       Key="Software\Colr Pak"
+
+        <RegistryValue Root="HKCU"
+                       Key="Software\ColrPak"
                        Name="DesktopShortcut"
                        Type="integer"
                        Value="1"
@@ -62,8 +56,7 @@
 
     <Feature Id="MainFeature" Title="Colr Pak" Level="1">
       <ComponentRef Id="MainExecutable" />
-      <ComponentRef Id="StartMenuShortcut" />
-      <ComponentRef Id="DesktopShortcut" />
-    </Feature>
+      <ComponentRef Id="StartMenuShortcutComponent" />
+      <ComponentRef Id="DesktopShortcutComponent" /> </Feature>
   </Package>
 </Wix>
