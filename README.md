@@ -44,6 +44,19 @@ Your fonts stay entirely on your computer and are never uploaded anywhere.
 
 ![colrpak screenshot](colrpakshot.png)
 ---
+## Download
+
+|**Linux**| |**Linux**| |**Microsoft Windows**|  |**Mac Os**|
+|---|---|---|---|---|---|---|
+| (x86_64)| |(arm64) | | (10 and 11)||(Apple Silicon M1/M2/M3/M4 and Intel)|
+|[Readymade app{`.tar.gz`}](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.2/colrpak-linux.tar.gz)| |[Readymade app{`.tar.gz`}](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.2/colrpak-linux-arm64.tar.gz)| |[Portable App](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.2/Colr.Pak.exe)| |[App, zipped](https://github.com/mitradranirban/colr-pak/releases/download/latest/colrpak-macos.zip)|
+|[snap](https://snapcraft.io/colrpak)| |[snap](https://snapcraft.io/colrpak)| |[Setup installer](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.2/ColrPak-Setup-0.4.2.exe)| |[Homebrew](https://github.com/mitradranirban/homebrew-tap)|
+|[Flatpak](https://github.com/mitradranirban/colrpak-flatpak)| |[Flatpak](https://github.com/mitradranirban/colrpak-flatpak)| |[msi installer](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.2/ColrPak-Windows-0.4.2.msi)|| - |
+
+ Read [Installation instruction](INSTALLATION.md) before installing
+
+No installation of Python or any other dependency is required — Color Pak ships as a self-contained binary.
+---
 
 ## Key Features
 
@@ -71,21 +84,6 @@ Your fonts stay entirely on your computer and are never uploaded anywhere.
 | `.woff`| ✅ | — |- | - |
 | `.woff2` | ✅ |✅  |✅ | ✅ |
 | `.ttx` | ✅ | — | - | - |
-
----
-
-## Download
-
-|**Linux**| |**Linux**| |**Microsoft Windows**|  |**Mac Os**|
-|---|---|---|---|---|---|---|
-| (x86_64)| |(arm64) | | (10 and 11)||(Apple Silicon M1/M2/M3/M4 and Intel)|
-|[Readymade app{`.tar.gz`}](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.1/colrpak-linux.tar.gz)| |[Readymade app{`.tar.gz`}](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.1/colrpak-linux-arm64.tar.gz)| |[Portable App](https://github.com/mitradranirban/colr-pak/releases/latest/Colr%20Pak.exe)| |[App, zipped](https://github.com/mitradranirban/colr-pak/releases/download/latest/colrpak-macos.zip)|
-|[snap](https://snapcraft.io/colrpak)| |[snap](https://snapcraft.io/colrpak)| |[Setup installer](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.1/ColrPak-Setup-0.4.1.exe)| |[Homebrew](https://github.com/mitradranirban/homebrew-tap)|
-|[Flatpak](https://github.com/mitradranirban/colrpak-flatpak)| |[Flatpak](https://github.com/mitradranirban/colrpak-flatpak)| |[msi installer](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.1/ColrPak-Windows-0.4.1.msi)|| - |
-
- Read [Installation instruction](INSTALLATION.md) before installing
-
-No installation of Python or any other dependency is required — Color Pak ships as a self-contained binary.
 
 ---
 
