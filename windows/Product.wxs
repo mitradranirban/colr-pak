@@ -37,20 +37,20 @@
     </StandardDirectory>
 
     <StandardDirectory Id="DesktopFolder">
-      <Component Id="DesktopShortcutComponent" Guid="B82D3A10-F4E7-4D56-C291-09A6B5F3E048">
-        <Condition>INSTALLDESKTOPSHORTCUT = "1"</Condition>
-
+      <Component Id="DesktopShortcutComponent"
+             Guid="B82D3A10-F4E7-4D56-C291-09A6B5F3E048"
+             Condition='INSTALLDESKTOPSHORTCUT = "1"'>
         <Shortcut Id="DesktopShortcut"
-                  Name="Colr Pak"
-                  Target="[INSTALLFOLDER]Colr Pak.exe"
-                  WorkingDirectory="INSTALLFOLDER" />
+              Name="Colr Pak"
+              Target="[INSTALLFOLDER]Colr Pak.exe"
+              WorkingDirectory="INSTALLFOLDER" />
 
         <RegistryValue Root="HKCU"
-                       Key="Software\ColrPak"
-                       Name="DesktopShortcut"
-                       Type="integer"
-                       Value="1"
-                       KeyPath="yes" />
+                   Key="Software\ColrPak"
+                   Name="DesktopShortcut"
+                   Type="integer"
+                   Value="1"
+                   KeyPath="yes" />
       </Component>
     </StandardDirectory>
 
