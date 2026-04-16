@@ -53,7 +53,7 @@ from PyQt6.QtWidgets import (
 )
 
 # Update before each release
-COLR_PAK_VERSION = "0.4.2"
+COLR_PAK_VERSION = "0.4.3"
 # UPDATE whenever merge from upstream fontra
 FONTRA_UPSTREAM_VERSION = "2026.4.1"
 

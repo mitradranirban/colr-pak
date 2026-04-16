@@ -6,6 +6,39 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.4.3] - 2026-04-16
+### color-support
+Add full COLRv1 round-trip support and fix variation handling
+
+This major update enhances the OTF backend's ability to read compiled COLRv1
+color fonts and seamlessly convert them into Fontra's native format, preserving
+crucial data like clip boxes and exact master metrics for editing and exporting.
+
+COLRv1 Structural & ClipBox Support
+- Map all 32 COLRv1 paint formats into Fontra's native camelCase dictionaries
+  via the new `_convertPaintGraphToFontra` recursive converter.
+- Extract `ClipList` definitions from the `COLR` table during initialization.
+- Recognize Format 2 (variable) `ClipBox` VarIndexBase definitions and correctly
+  add them to the location discovery loop.
+- Instantiate specific `ClipBox` coordinates per master layer and preserve them
+  inside `layer.glyph.customData["fontra.colrv1.clipBox"]`.
+
+Variation & Indexing Fixes
+- Fix a critical discrepancy where `_collectVarIndicesFromPaint` was gathering raw
+  variation indices without applying `varIndexMap`, causing locations to detach
+  from instancer mapping.
+- Add `NO_VARIATION_INDEX` `None` guards to axis mapping resolution.
+- Extract and preserve the OpenType `VarStore` and `VarIndexMap` directly into
+  `customData` for flawless variable font re-compilation.
+
+General Glyph & Font Source Updates
+- Support indexing and resolving `PaintColrLayers` when a base glyph maps to
+  multiple color layers or nested elements.
+- Fix tuple/list structure initialization when converting `avar` map segments.
+- Add guards for variable composite glyphs missing `axisValuesVarIndex` or
+  `transformVarIndex` in `VARC` table.
+- Convert FontTools `ColorLine` and color palette values natively to RGBA format.
+
 ## [v0.4.2] - 2026-04-13
 ### ColrPak
 - Remove fetch Latest Release Info in Linux platform as that is crashing in Flatpak environment.
