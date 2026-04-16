@@ -49,9 +49,9 @@ Your fonts stay entirely on your computer and are never uploaded anywhere.
 |**Linux**| |**Linux**| |**Microsoft Windows**|  |**Mac Os**|
 |---|---|---|---|---|---|---|
 | (x86_64)| |(arm64) | | (10 and 11)||(Apple Silicon M1/M2/M3/M4 and Intel)|
-|[Readymade app{`.tar.gz`}](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.2/colrpak-linux.tar.gz)| |[Readymade app{`.tar.gz`}](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.2/colrpak-linux-arm64.tar.gz)| |[Portable App](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.2/Colr.Pak.exe)| |[App, zipped](https://github.com/mitradranirban/colr-pak/releases/download/latest/colrpak-macos.zip)|
-|[snap](https://snapcraft.io/colrpak)| |[snap](https://snapcraft.io/colrpak)| |[Setup installer](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.2/ColrPak-Setup-0.4.2.exe)| |[Homebrew](https://github.com/mitradranirban/homebrew-tap)|
-|[Flatpak](https://github.com/mitradranirban/colrpak-flatpak)| |[Flatpak](https://github.com/mitradranirban/colrpak-flatpak)| |[msi installer](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.2/ColrPak-Windows-0.4.2.msi)|| - |
+|[Readymade app{`.tar.gz`}](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.4/colrpak-linux.tar.gz)| |[Readymade app{`.tar.gz`}](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.4/colrpak-linux-arm64.tar.gz)| |[Portable App](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.4/Colr.Pak.exe)| |[App, zipped](https://github.com/mitradranirban/colr-pak/releases/download/latest/colrpak-macos.zip)|
+|[snap](https://snapcraft.io/colrpak)| |[snap](https://snapcraft.io/colrpak)| |[Setup installer](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.4/ColrPak-Setup-0.4.4.exe)| |[Homebrew](https://github.com/mitradranirban/homebrew-tap)|
+|[Flatpak](https://github.com/mitradranirban/colrpak-flatpak)| |[Flatpak](https://github.com/mitradranirban/colrpak-flatpak)| |[msi installer](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.4/ColrPak-Windows-0.4.4.msi)|| - |
 
  Read [Installation instruction](INSTALLATION.md) before installing
 
@@ -63,7 +63,7 @@ No installation of Python or any other dependency is required — Color Pak ship
 - **COLRv1 Paint Graph Editor** — visually compose `PaintSolid`, `PaintLinearGradient`, `PaintRadialGradient`, `PaintSweepGradient`, `PaintGlyph`, `PaintTranslate`, `PaintScale`, `PaintRotate`, `PaintSkew`, and `PaintTransform` nodes per glyph.
 - **COLRv0 Layer Mapping** — manage color layer stacks with palette index assignments for simpler color fonts.
 - **One-click COLRv0 → COLRv1 Upgrade** — automatically convert an existing v0 layer mapping into an equivalent COLRv1 `PaintColrLayers` structure.
-- **Masterless COLRv1 Variation (WIP)** — author variable color parameters (gradient stops, transform values, alpha) as independent per-axis keyframes, without requiring separate outline masters.
+- **Masterless COLRv1 Variation** — author variable color parameters (gradient stops, transform values, alpha) as independent per-axis keyframes, without requiring separate outline masters.
 - **Live Canvas Rendering** — see COLRv1 paint effects rendered in real time on the glyph canvas as you edit.
 - **Palette Management** — define and switch between multiple color palettes; the active palette is reflected immediately in the canvas preview.
 - **Full Fontra Editing Core** — all standard Fontra editing features (glyph drawing, variable font axes, anchors, components, etc.) are included.

@@ -6,6 +6,46 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.4.4] - 2026-04-16
+feat(colrv1): add CPAL palette names + fix variable paint compilation
+
+### New Features
+
+#### CPAL v1 Palette Names
+- Add `org.colrpak.colorPaletteLabels` lib key to store per-palette
+  name strings in the .fontra source
+- Read palette labels in `buildFont` via `_normalizePaletteLabels()`
+- Emit CPAL version 1 with `paletteLabels` and corresponding nameIDs
+  in the name table when any palette has a label, using
+  `fontTools.colorLib.builder.buildCPAL`
+- Add `_palettesHaveLabels()` guard so static fonts without labels
+  continue to emit CPAL version 0 unchanged
+
+#### UI (panel-color-palette.js)
+- Add per-palette name input field bound to
+  `org.colrpak.colorPaletteLabels`
+- Sync label edits back to font data on change
+
+#### Translations (local-language-overrides.csv)
+- Add i18n strings for palette name label, placeholder, notice,
+  and entry count (singular/plural) in all 11 supported languages
+- Retranslate all existing strings into correct column order
+
+### Bug Fixes
+
+#### COLRv1 variable font compilation (builder.py)
+- Move `pb.varstorebuilder = OnlineVarStoreBuilder(...)` to before
+  the colorGlyphs loop so `make_var_scalar` always has a valid store;
+  previously a variable glyph encountered first would crash with
+  `ValueError: dictionary update sequence element #0 has length 1`
+- Fix `userSpaceLocs` construction to use only fvar axis tags known
+  to `PythonBuilder.axes`, preventing bare axis name strings from
+  leaking into `VariableScalar.add_value` as invalid location keys
+- Reuse `glyphInfo.model` (already validated in `prepareGlyphs`)
+  instead of constructing a second `VariationModel` from raw
+  user-space locations, avoiding index mismatches between the model's
+  `reverseMapping` and the locations list
+
 ## [v0.4.3] - 2026-04-16
 ### color-support
 Add full COLRv1 round-trip support and fix variation handling
