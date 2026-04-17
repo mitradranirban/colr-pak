@@ -1,0 +1,59 @@
+# .github/workflows/test-wix.yml
+# Temporary — delete before merging PR
+name: Test WiX MSI build
+
+on:
+  push:
+    branches:
+      - upstream
+  workflow_dispatch:
+
+jobs:
+  test-wix:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Create dummy files
+        shell: pwsh
+        run: |
+          $root = (Get-Location).Path
+          Write-Host "Working directory: $root"
+          $exe  = Join-Path $root "dist" "Fontra Pak.exe"
+          $ico  = Join-Path $root "icon" "FontraIcon.ico"
+          New-Item -ItemType Directory -Force -Path (Join-Path $root "dist") | Out-Null
+          New-Item -ItemType Directory -Force -Path (Join-Path $root "icon") | Out-Null
+          Copy-Item "C:\Windows\System32\notepad.exe" $exe
+          Copy-Item "C:\Windows\System32\notepad.exe" $ico
+          Write-Host "Exe exists:  $(Test-Path $exe)  -> $exe"
+          Write-Host "Icon exists: $(Test-Path $ico)  -> $ico"
+      - name: Verify WiX will find the files
+        shell: pwsh
+        run: |
+          # WiX resolves Source relative to the .wxs file location
+          $wxs  = Resolve-Path "windows\Product.wxs"
+          $wxsDir = Split-Path $wxs
+          Write-Host "WXS location: $wxs"
+          $exe  = Resolve-Path (Join-Path $wxsDir "..\dist\Fontra Pak.exe")
+          $ico  = Resolve-Path (Join-Path $wxsDir "..\icon\FontraIcon.ico")
+          Write-Host "Exe  resolved: $exe  exists=$(Test-Path $exe)"
+          Write-Host "Icon resolved: $ico  exists=$(Test-Path $ico)"
+          if (-not (Test-Path $exe))  { throw "EXE not found at $exe" }
+          if (-not (Test-Path $ico))  { throw "ICO not found at $ico" }
+          Write-Host "All files verified OK"
+      - name: Install WiX v6
+        shell: pwsh
+        run: dotnet tool install --global wix --version 6.0.2
+
+      - name: Add WiX UI extension
+        shell: pwsh
+        run: wix extension add --global WixToolset.UI.wixext/6.0.2
+
+      - name: Compile MSI
+        shell: pwsh
+        run: |
+          Set-Location windows
+          wix build Product.wxs -arch x64 -d "Version=0.0.1" -ext WixToolset.UI.wixext -o "$env:GITHUB_WORKSPACE\dist\FontraPak-test.msi"
+      - name: Verify MSI was created
+        shell: pwsh
+        run: Get-Item "$env:GITHUB_WORKSPACE\dist\FontraPak-test.msi"
