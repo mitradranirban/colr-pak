@@ -6,6 +6,41 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.4.5] -2026-04-22
+fix(builder): cu2qu conversion, name table, and OpenType feature compilation
+
+Three significant fixes to the font compilation pipeline:
+
+1. **Fix cubic-in-glyf browser rejection (OTS compatibility)**
+   - Remove glyphDataFormat=1 assignment for cubic glyf outlines
+     as glyph-1 support is not main stream in any app yet
+   - Add cu2qu conversion inside buildTTGlyph() when cubic off-curve
+     points (flagCubic) are detected in the default source
+   - Conversion is performed across ALL sources in lockstep using
+     Cu2QuPen to ensure identical point counts across masters
+   - Rebuild gvar variation deltas from converted quadratic coordinates
+     so outline variation is preserved correctly after conversion
+   - Keeps glyphDataFormat=0 (quadratic TrueType), which is the only
+     value accepted by browser OTS implementations today
+   - OpenType 1.9 cubic-in-glyf (glyphDataFormat=1) is spec-valid but
+     rejected by all current browsers; this fix ensures web-ready output
+
+2. **Fix name table compiled from font source metadata**
+   - Replace empty setupNameTable(dict()) with data read from
+     font-data.json via the existing getFontData() method
+   - Populates familyName, styleName, fullName, uniqueFontIdentifier,
+     version, and psName from fontInfo fields in the Fontra source
+
+3. **Add OpenType feature compilation (GSUB/GPOS)**
+   - Read features.txt from the .fontra package root (Adobe .fea format)
+   - Compile into GSUB and GPOS tables using fontTools feaLib
+     (addOpenTypeFeatures) after the font is otherwise fully built
+   - Supports all feature types: calt, kern, liga, mark, etc.
+   - Failure is non-fatal: emits a warning and continues without features
+
+4. **Fix duplicate function definitions (flake8 F811)**
+   - Remove duplicate definitions of _normalizePaletteLabels and
+     _palettesHaveLabels that were already defined earlier in the module
 ## [v0.4.4] - 2026-04-16
 feat(colrv1): add CPAL palette names + fix variable paint compilation
 

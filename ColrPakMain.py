@@ -53,9 +53,9 @@ from PyQt6.QtWidgets import (
 )
 
 # Update before each release
-COLR_PAK_VERSION = "0.4.4"
+COLR_PAK_VERSION = "0.4.5"
 # UPDATE whenever merge from upstream fontra
-FONTRA_UPSTREAM_VERSION = "2026.4.1"
+FONTRA_UPSTREAM_VERSION = "2026.4.2"
 
 commonCSS = """
 border-radius: 20px;

@@ -23,7 +23,10 @@
   <a href="https://github.com/mitradranirban/colr-pak/wiki/new">New Project</a> ·
   <a href="https://github.com/mitradranirban/colr-pak/wiki/palette">Color Palettes</a> ·
   <a href="https://github.com/mitradranirban/colr-pak/wiki/v0layers"> V0 layers</a> ·
-<a href="https://github.com/mitradranirban/colr-pak/wiki/v0VF">ColrV0 Variable Font</a> · <a href="https://github.com/mitradranirban/colr-pak/wiki/v1paint">ColrV1 Visual Paint</a>
+  <a href="https://github.com/mitradranirban/colr-pak/wiki/v0VF">ColrV0 Variable Font</a> ·
+  <a href="https://github.com/mitradranirban/colr-pak/wiki/v1paint">ColrV1 Visual Paint</a> ·
+  <a href="https://github.com/mitradranirban/colr-pak/wiki/named">Named Palettes</a> ·
+
 </p>
 <p align="center">
 <strong>Troubleshooting:</strong>
@@ -49,9 +52,9 @@ Your fonts stay entirely on your computer and are never uploaded anywhere.
 |**Linux**| |**Linux**| |**Microsoft Windows**|  |**Mac Os**|
 |---|---|---|---|---|---|---|
 | (x86_64)| |(arm64) | | (10 and 11)||(Apple Silicon M1/M2/M3/M4 and Intel)|
-|[Readymade app{`.tar.gz`}](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.4/colrpak-linux.tar.gz)| |[Readymade app{`.tar.gz`}](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.4/colrpak-linux-arm64.tar.gz)| |[Portable App](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.4/Colr.Pak.exe)| |[App, zipped](https://github.com/mitradranirban/colr-pak/releases/download/latest/colrpak-macos.zip)|
-|[snap](https://snapcraft.io/colrpak)| |[snap](https://snapcraft.io/colrpak)| |[Setup installer](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.4/ColrPak-Setup-0.4.4.exe)| |[Homebrew](https://github.com/mitradranirban/homebrew-tap)|
-|[Flatpak](https://github.com/mitradranirban/colrpak-flatpak)| |[Flatpak](https://github.com/mitradranirban/colrpak-flatpak)| |[msi installer](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.4/ColrPak-Windows-0.4.4.msi)|| - |
+|[Readymade app{`.tar.gz`}](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.5/colrpak-linux.tar.gz)| |[Readymade app{`.tar.gz`}](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.5/colrpak-linux-arm64.tar.gz)| |[Portable App](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.5/Colr.Pak.exe)| |[App, zipped](https://github.com/mitradranirban/colr-pak/releases/download/latest/colrpak-macos.zip)|
+|[snap](https://snapcraft.io/colrpak)| |[snap](https://snapcraft.io/colrpak)| |[Setup installer](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.5/ColrPak-Setup-0.4.5.exe)| |[Homebrew](https://github.com/mitradranirban/homebrew-tap)|
+|[Flatpak](https://github.com/mitradranirban/colrpak-flatpak)| |[Flatpak](https://github.com/mitradranirban/colrpak-flatpak)| |[msi installer](https://github.com/mitradranirban/colr-pak/releases/download/v0.4.5/ColrPak-Windows-0.4.5.msi)|| - |
 
  Read [Installation instruction](INSTALLATION.md) before installing
 
