@@ -6,6 +6,17 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.5.0] - 2026-04-24
+### fontra-color-support
+### Added
+- Add panel support for `PaintTransform`, `PaintComposite`, `PaintSkew`, and `PaintRotate` in the COLRv1 Color Layers UI.
+- Add a right-click editor menu action `Add Paint` to insert paint references to other glyphs.
+
+### Fixed
+- Fix COLRv1 panel editing and backend write-path issues discovered while adding the new paint types.
+- Fix referenced glyph tracking so paint graph edits correctly update dependent glyph references.
+- Fix assorted editor, rendering, and integration bugs related to COLRv1 paint graph authoring.
+
 ## [v0.4.5] -2026-04-22
 fix(builder): cu2qu conversion, name table, and OpenType feature compilation
 
