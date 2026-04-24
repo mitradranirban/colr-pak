@@ -198,10 +198,8 @@ jobs:
           generate_release_notes: true
 
       - name: Trigger Downstream Updates with Tag
-        if: steps.create_release.conclusion == 'success' && github.ref_type == 'tag'
         run: |
           BUILD_TAG="${{ github.ref_name }}"
-
           for repo in "mitradranirban/colrpak-flatpak" "mitradranirban/homebrew-tap"; do
             echo "Triggering $repo with tag $BUILD_TAG..."
             curl -X POST \

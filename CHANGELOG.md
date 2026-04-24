@@ -6,6 +6,12 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.5.1] - 2026-04-24
+### Github Workflow
+
+- Make Flatpak build and Homebrew tap update compulsory with each release
+
+
 ## [v0.5.0] - 2026-04-24
 ### fontra-color-support
 ### Added
