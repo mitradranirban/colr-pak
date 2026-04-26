@@ -6,6 +6,18 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.5.2] - 2026-04-26
+### fontra-color-support
+**featcolrv1 improve PaintComposite authoring in panel-color-layers.js**
+
+- Fix sourcePaint/backdropPaint child mutation paths for composite params and glyphs
+- Add nested PaintColrLayers editing inside PaintComposite children
+- Add sublayer add/remove/reorder and transform editing for composite child layers
+- Switch PaintComposite defaults to string compositeMode and seeded PaintColrLayers source
+- Preserve current glyph when converting a layer to PaintComposite
+- Replace composite mode text input with a dropdown using native select
+- Replace read-only composite child PaintColrLayers info with inline editable controls
+
 ## [v0.5.1] - 2026-04-24
 ### Github Workflow
 
