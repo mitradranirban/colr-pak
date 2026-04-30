@@ -26,6 +26,8 @@
   <a href="https://github.com/mitradranirban/colr-pak/wiki/v0VF">ColrV0 Variable Font</a> ·
   <a href="https://github.com/mitradranirban/colr-pak/wiki/v1paint">ColrV1 Visual Paint</a> ·
   <a href="https://github.com/mitradranirban/colr-pak/wiki/named">Named Palettes</a> ·
+  <a href="https://github.com/mitradranirban/colr-pak/wiki/v1VF">Colr V1 masterless variable</a> ·
+
 
 </p>
 <p align="center">
@@ -52,9 +54,9 @@ Your fonts stay entirely on your computer and are never uploaded anywhere.
 |**Linux**| |**Linux**| |**Microsoft Windows**|  |**Mac Os**|
 |---|---|---|---|---|---|---|
 | (x86_64)| |(arm64) | | (10 and 11)||(Apple Silicon M1/M2/M3/M4 and Intel)|
-|[Readymade app{`.tar.gz`}](https://github.com/mitradranirban/colr-pak/releases/download/v0.5.2/colrpak-linux.tar.gz)| |[Readymade app{`.tar.gz`}](https://github.com/mitradranirban/colr-pak/releases/download/v0.5.2/colrpak-linux-arm64.tar.gz)| |[Portable App](https://github.com/mitradranirban/colr-pak/releases/download/v0.5.2/Colr.Pak.exe)| |[App, zipped](https://github.com/mitradranirban/colr-pak/releases/download/latest/colrpak-macos.zip)|
-|[snap](https://snapcraft.io/colrpak)| |[snap](https://snapcraft.io/colrpak)| |[Setup installer](https://github.com/mitradranirban/colr-pak/releases/download/v0.5.2/ColrPak-Setup-0.5.2.exe)| |[Homebrew](https://github.com/mitradranirban/homebrew-tap)|
-|[Flatpak](https://github.com/mitradranirban/colrpak-flatpak)| |[Flatpak](https://github.com/mitradranirban/colrpak-flatpak)| |[msi installer](https://github.com/mitradranirban/colr-pak/releases/download/v0.5.2/ColrPak-Windows-0.5.2.msi)|| - |
+|[Readymade app{`.tar.gz`}](https://github.com/mitradranirban/colr-pak/releases/download/v0.6.0/colrpak-linux.tar.gz)| |[Readymade app{`.tar.gz`}](https://github.com/mitradranirban/colr-pak/releases/download/v0.6.0/colrpak-linux-arm64.tar.gz)| |[Portable App](https://github.com/mitradranirban/colr-pak/releases/download/v0.6.0/Colr.Pak.exe)| |[App, zipped](https://github.com/mitradranirban/colr-pak/releases/download/latest/colrpak-macos.zip)|
+|[snap](https://snapcraft.io/colrpak)| |[snap](https://snapcraft.io/colrpak)| |[Setup installer](https://github.com/mitradranirban/colr-pak/releases/download/v0.6.0/ColrPak-Setup-0.6.0.exe)| |[Homebrew](https://github.com/mitradranirban/homebrew-tap)|
+|[Flatpak](https://github.com/mitradranirban/colrpak-flatpak)| |[Flatpak](https://github.com/mitradranirban/colrpak-flatpak)| |[msi installer](https://github.com/mitradranirban/colr-pak/releases/download/v0.6.0/ColrPak-Windows-0.6.0.msi)|| - |
 
  Read [Installation instruction](INSTALLATION.md) before installing
 
@@ -95,8 +97,8 @@ No installation of Python or any other dependency is required — Color Pak ship
 ### Prerequisites
 
 - Python 3.11+
-- `pip`
-- `PyInstaller`
+- `make` (GNU Make)
+- *Note: Virtual environment creation, `pip` updates, and `PyInstaller` are handled automatically by the Makefile.*
 
 ### Steps
 
@@ -105,20 +107,28 @@ No installation of Python or any other dependency is required — Color Pak ship
 git clone https://github.com/mitradranirban/colr-pak
 cd colr-pak
 
-# 2. Create and activate a virtual environment
-python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
-
-# 3. Install dependencies (pulls color-support forks of fontra and fontra-compile)
-pip install -r requirements.txt
-
-# 4. Build the binary
-pyinstaller ColrPak.spec
+# 2. Build the application
+make
 ```
+
+The default `make` command (which runs `make build`) will automatically:
+1. Create a virtual environment (`venv`) if it doesn't already exist.
+2. Install and upgrade dependencies from `requirements.txt` (pulling the color-support forks of fontra and fontra-compile).
+3. Build the binary using the `ColrPak.spec` file.
 
 The output binary will be placed in `dist/Color Pak/` (macOS/Windows) or `dist/colorpak` (Linux).
 
----
+### Additional Make Commands
+
+You can also use the following commands to manage your build environment:
+
+```bash
+make clean    # Removes the build, dist, and __pycache__ directories
+make rebuild  # Cleans the environment and builds the binary again
+make help     # Lists all available Make targets and variables
+```
+
+*(Note for Windows users: Ensure you have a `make` utility installed via MSYS2, MinGW, Chocolatey, or run the commands within WSL or a compatible bash environment, as the Makefile uses Windows-specific paths internally when detected).*
 
 ## Architecture & Color Support
 

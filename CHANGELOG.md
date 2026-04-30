@@ -6,6 +6,43 @@ built on [Fontra](https://github.com/fontra/fontra) and
 [fontra-compile](https://github.com/fontra/fontra-compile).
 
 ---
+## [v0.6.0] - 2026-04-28
+
+### Added
+- Added direct on-canvas editing for COLRv1 transform paints, including PaintTranslate, PaintRotate, PaintScale, PaintSkew, and matrix-based PaintTransform.
+
+- Added transform-aware handle rendering with dedicated visuals such as translate crosshairs, rotation arcs, scale arms, skew guides, and PaintTransform parallelograms.
+
+- Added bounds-aware PaintTransform editing by fetching child glyph bounds and falling back to computed path bounds when needed.
+
+### Changed
+- Expanded the unified paint tool from gradient-only editing into a general COLRv1 editor that dispatches behavior by handle role instead of a narrower handle map.
+
+- Updated cursor behavior so different handle types display context-specific cursors such as move, resize, alias, cell, and crosshair.
+
+- Reworked drag handling to properly separate direct coordinate edits, angle edits, and custom transform commits (such as scale, skew, and matrix adjustments).
+
+### Fixed
+- Fixed PaintTransform handle placement so transform wrappers are treated as top-level paint nodes instead of incorrectly reading only layer.paint.
+
+- Fixed transform-handle sizing by using actual child glyph bounds when available, with a safe fallback when bounds cannot be resolved.
+
+- Fixed palette cycling to successfully read palette data from the active font controller path used by the scene model.
+
+- Fixed highlight and live-preview updates so transformed handle movement is redrawn smoothly and consistently during drag operations.
+
+**fontra-compile(color-support)**
+
+- **handle decomposed PaintTransform nodes**
+- Adds a helper to normalize decomposed transform properties (translateX, scaleX, rotation, etc.) into a standard 6-element affine matrix using `DecomposedTransform`. The fix is applied to both static paint generation and variable font merging.
+
+### Internal
+- Reorganized paint-tool role handling into distinct direct-role, angle-role, and custom-role dispatch maps for better maintainability.
+
+- Added internal helper utilities for raw path-bound calculation and transform-matrix point application.
+
+- Updated COLRv1 test glyph fixtures to exercise the new transform and skew workflows, adjusting metrics and outline coordinates accordingly.
+
 ## [v0.5.2] - 2026-04-26
 ### fontra-color-support
 **featcolrv1 improve PaintComposite authoring in panel-color-layers.js**
